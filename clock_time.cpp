@@ -18,15 +18,15 @@ int main() {
     std::cin >> hours >> minutes;
     // std::cin.good() checks if inputs are of correct types
     if (!(std::cin.good() && hours >= kZero && hours < kTwentyFour && minutes >= kZero && minutes < kSixty)) {
-        std::cout << "введены недопустимые данные";
+        std::cout << "введены недопустимые данные" << std::endl;
         return 1;
     }
 
     if (hours == kTwelve && minutes == kZero) {
-        std::cout << "полдень";
+        std::cout << "полдень" << std::endl;
         return 0;
     } else if (hours == kZero && minutes == kZero) {
-        std::cout << "полночь";
+        std::cout << "полночь" << std::endl;
         return 0;
     }
 
@@ -65,5 +65,6 @@ int main() {
         std::cout << " ровно";
     }
 
+    std::cout << std::endl;
     return 0;
 }
