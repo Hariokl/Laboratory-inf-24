@@ -1,21 +1,21 @@
 #include <iostream>
 
-int zeroHours = 0;
-int oneHours = 1;
-int twoHours = 2;
-int fiveHours = 5;
-int twelveHours = 12;
-int eighteenHours = 18;
-int twentyFourHours = 24;
+const int zeroHours = 0;
+const int oneHours = 1;
+const int twoHours = 2;
+const int fiveHours = 5;
+const int twelveHours = 12;
+const int eighteenHours = 18;
+const int twentyFourHours = 24;
 
-int zeroMinutes = 0;
-int oneMinutes = 1;
-int twoMinutes = 2;
-int threeMinutes = 3;
-int fourMinutes = 4;
-int sixtyMinutes = 60;
+const int zeroMinutes = 0;
+const int oneMinutes = 1;
+const int twoMinutes = 2;
+const int threeMinutes = 3;
+const int fourMinutes = 4;
+const int sixtyMinutes = 60;
 
-int delimeterByTen = 10;
+const int delimeterByTen = 10;
 
 auto func_timeOfDay(int hours) {
     if (fiveHours <= hours && hours < twelveHours) {
@@ -47,7 +47,8 @@ auto func_minutesChar(int minutes) {
 }
 
 int main() {
-    int hours = zeroHours, minutes = zeroMinutes;
+    int hours = zeroHours;
+    int minutes = zeroMinutes;
     std::cin >> hours >> minutes;
 
     if (!(hours >= zeroHours && hours < twentyFourHours && minutes >= zeroMinutes && minutes < sixtyMinutes)) {
