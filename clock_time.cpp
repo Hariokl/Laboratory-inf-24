@@ -17,35 +17,6 @@ const int sixtyMinutes = 60;
 
 const int delimeterByTen = 10;
 
-auto func_timeOfDay(int hours) {
-    if (fiveHours <= hours && hours < twelveHours) {
-        return "утра";
-    } else if (twelveHours <= hours && hours < eighteenHours) {
-        return "дня";
-    } else if (eighteenHours <= hours && hours < twentyFourHours) {
-        return "вечера";
-    }
-    return "ночи";
-}
-
-auto func_hoursChar(int hours) {
-    if (hours == oneHours) {
-        return "час";
-    } else if (hours >= twoHours && hours < fiveHours) {
-        return "часа";
-    }
-    return "часов";
-}
-
-auto func_minutesChar(int minutes) {
-    if (minutes % delimeterByTen == oneMinutes) {
-        return "минута";
-    } else if (minutes % delimeterByTen == twoMinutes || minutes % delimeterByTen == threeMinutes || minutes % delimeterByTen == fourMinutes) {
-        return "минуты";
-    }
-    return "минут";
-}
-
 int main() {
     int hours = zeroHours;
     int minutes = zeroMinutes;
@@ -64,16 +35,40 @@ int main() {
         return 0;
     }
 
-    auto timeOfDay = func_timeOfDay(hours);
-    auto hoursChar = func_hoursChar(hours);
-    auto minutesChar = func_minutesChar(minutes);
+    std::cout << hours;
 
-    if (minutes == zeroMinutes) {
-        std::cout << hours << " " << hoursChar << " " << timeOfDay << " ровно";
-        return 0;
+    if (hours == oneHours) {
+        std::cout << " час";
+    } else if (hours >= twoHours && hours < fiveHours) {
+        std::cout << " часа";
+    } else {
+        std::cout << " часов";
     }
 
-    std::cout << hours << " " << hoursChar << " " << minutes << " " << minutesChar << " " << timeOfDay;
+    if (minutes != zeroMinutes) {
+        std::cout << minutes;
+        if (minutes % delimeterByTen == oneMinutes) {
+            std::cout << " минута";
+        } else if (minutes % delimeterByTen == twoMinutes || minutes % delimeterByTen == threeMinutes || minutes % delimeterByTen == fourMinutes) {
+            std::cout << " минуты";
+        } else {
+            std::cout << " минут";
+        }
+    }
+
+    if (fiveHours <= hours && hours < twelveHours) {
+        std::cout << " утра";
+    } else if (twelveHours <= hours && hours < eighteenHours) {
+        std::cout << " дня";
+    } else if (eighteenHours <= hours && hours < twentyFourHours) {
+        std::cout << " вечера";
+    } else {
+        std::cout << " ночи";
+    }
+
+    if (minutes == zeroMinutes) {
+        std::cout << " ровно";
+    }
 
     return 0;
 }
