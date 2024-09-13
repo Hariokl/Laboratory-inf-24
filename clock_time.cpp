@@ -16,8 +16,8 @@ int main() {
     int hours = kZero;
     int minutes = kZero;
     std::cin >> hours >> minutes;
-
-    if (!(hours >= kZero && hours < kTwentyFour && minutes >= kZero && minutes < kSixty)) {
+    // std::cin.good() checks if inputs are of correct types
+    if (!(std::cin.good() && hours >= kZero && hours < kTwentyFour && minutes >= kZero && minutes < kSixty)) {
         std::cout << "введены недопустимые данные";
         return 1;
     }
