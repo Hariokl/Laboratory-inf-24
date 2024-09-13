@@ -1,47 +1,64 @@
 #include <iostream>
 
+int zeroHours = 0;
+int oneHours = 1;
+int twoHours = 2;
+int fiveHours = 5;
+int twelveHours = 12;
+int eighteenHours = 18;
+int twentyFourHours = 24;
+
+int zeroMinutes = 0;
+int oneMinutes = 1;
+int twoMinutes = 2;
+int threeMinutes = 3;
+int fourMinutes = 4;
+int sixtyMinutes = 60;
+
+int delimeterByTen = 10;
+
 auto func_timeOfDay(int hours) {
-    if (5 <= hours && hours < 12) {
+    if (fiveHours <= hours && hours < twelveHours) {
         return "утра";
-    } else if (12 <= hours && hours < 18) {
+    } else if (twelveHours <= hours && hours < eighteenHours) {
         return "дня";
-    } else if (18 <= hours && hours < 24) {
+    } else if (eighteenHours <= hours && hours < twentyFourHours) {
         return "вечера";
     }
     return "ночи";
 }
 
 auto func_hoursChar(int hours) {
-    if (hours == 1) {
+    if (hours == oneHours) {
         return "час";
-    } else if (hours >= 2 && hours < 5) {
+    } else if (hours >= twoHours && hours < fiveHours) {
         return "часа";
     }
     return "часов";
 }
 
 auto func_minutesChar(int minutes) {
-    if (minutes % 10 == 1) {
+    if (minutes % delimeterByTen == oneMinutes) {
         return "минута";
-    } else if (minutes % 10 == 2 || minutes % 10 == 3 || minutes % 10 == 4) {
+    } else if (minutes % delimeterByTen == twoMinutes || minutes % delimeterByTen == threeMinutes || minutes % delimeterByTen == fourMinutes) {
         return "минуты";
     }
     return "минут";
 }
 
 int main() {
-    int hours = 0, minutes = 0;
+    int hours = zeroHours, minutes = zeroMinutes;
     std::cin >> hours >> minutes;
 
-    if (!(hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60)) {
+    if (!(hours >= zeroHours && hours < twentyFourHours && minutes >= zeroMinutes && minutes < sixtyMinutes)) {
         std::cout << "введены недопустимые данные";
         return 1;
     }
 
-    if (hours == 12 && minutes == 0) {
+    if (hours == twelveHours && minutes == zeroMinutes) {
         std::cout << "полдень";
         return 0;
-    } else if (hours == 0 && minutes == 0) {
+    } else if (hours == zeroHours && minutes == zeroMinutes) {
         std::cout << "полночь";
         return 0;
     }
@@ -50,7 +67,7 @@ int main() {
     auto hoursChar = func_hoursChar(hours);
     auto minutesChar = func_minutesChar(minutes);
 
-    if (minutes == 0) {
+    if (minutes == zeroMinutes) {
         std::cout << hours << " " << hoursChar << " " << timeOfDay << " ровно";
         return 0;
     }
