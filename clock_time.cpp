@@ -1,11 +1,12 @@
 #include <iostream>
 
 namespace {
-const int kOne = 1;
-const int kTwo = 2;
-const int kThree = 3;
-const int kFour = 4;
-const int kFive = 5;
+const int kOneHour = 1;
+const int kFiveHour = 5;
+
+const int kOneMinute = 1;
+const int kFourMinute = 4;
+const int kFirstTenMinute = 1;
 
 const int kMinTime = 0;
 const int kMorning = 5;
@@ -42,9 +43,9 @@ int main() {
         std::cout << hours % kHalfADay;
     }
 
-    if (hours % kHalfADay == kOne) {
+    if (hours % kHalfADay == kOneHour) {
         std::cout << " час";
-    } else if (hours % kHalfADay >= kTwo && hours % kHalfADay < kFive) {
+    } else if (hours % kHalfADay < kFiveHour) {
         std::cout << " часа";
     } else {
         std::cout << " часов";
@@ -52,9 +53,9 @@ int main() {
 
     if (minutes != kMinTime) {
         std::cout << " " << minutes;
-        if (minutes % kModTen == kOne) {
+        if (minutes % kModTen == kOneMinute) {
             std::cout << " минута";
-        } else if (minutes / kDevideByTen != 1 && (minutes % kModTen == kTwo || minutes % kModTen == kThree || minutes % kModTen == kFour)) {
+        } else if (minutes / kDevideByTen != kFirstTenMinute && minutes % kModTen <= kFourMinute) {
             std::cout << " минуты";
         } else {
             std::cout << " минут";
