@@ -1,5 +1,6 @@
 #include <iostream>
 
+namespace {
 const int kOne = 1;
 const int kTwo = 2;
 const int kThree = 3;
@@ -13,6 +14,7 @@ const int kHalfADay = 12;
 const int kEvening = 18;
 const int kMaxHours = 24;
 const int kMaxMinutes = 60;
+}  // namespace
 
 int main() {
     int hours = kMinTime;
