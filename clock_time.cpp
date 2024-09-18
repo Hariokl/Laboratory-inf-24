@@ -23,6 +23,7 @@ int main() {
     int hours = kMinHoursInclude;
     int minutes = kMinMinutesInclude;
 
+    std::cout << "Введите время в формате: часы(от 0 минут до 23 часов включительно) минуты(от 0 минут до 59 минут включительно)";
     std::cin >> hours >> minutes;
 
     if (hours < kMinHoursInclude || hours > kMaxHoursInclude || minutes < kMinMinutesInclude || minutes > kMaxMinutesInclude) {
