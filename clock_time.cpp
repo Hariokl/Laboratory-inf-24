@@ -1,84 +1,79 @@
 #include <iostream>
 
 namespace {
-const int kOneHour = 1;
-const int kFiveHour = 5;
+const int kOneHours = 1;   //
+const int kFiveHours = 5;  //
 
-const int kOneMinute = 1;
-const int kFourMinute = 4;
-const int kFirstTenMinutes = 1;  // ???
+const int kOneMinutes = 1;   //
+const int kFourMinutes = 4;  //
 
-const int kMinHours = 0;
-const int kMinMinutes = 0;
-const int kMorningHours = 5;
-const int kMinutesModTen = 10;
-const int kMinutesDevideTen = 10;
+const int kMinHoursInclude = 0;
+const int kMinMinutesInclude = 0;
+const int kMorningBeginsHours = 5;
+const int kNumberToGetRemainderByTen = 10;        //
+const int kNumberToGetIntegerDivisionByTen = 10;  //
 const int kHalfADay = 12;
-const int kEveningHours = 18;
-const int kMaxHours = 24;
-const int kMaxMinutes = 60;
+const int kEveningBeginsHours = 18;
+const int kNightBeginsHours = 0;
+const int kMaxHoursInclude = 23;
+const int kMaxMinutesInclude = 59;
 }  // namespace
 
 int main() {
-    int hours = kMinHours;
-    int minutes = kMinMinutes;
+    int hours = kMinHoursInclude;
+    int minutes = kMinMinutesInclude;
 
-    // std::cin >> hours >> minutes;
-    std::cout << "Введите часы: ";
-    std::cin >> hours;
-    std::cout << "Введите минуты: ";
-    std::cin >> minutes;
+    std::cin >> hours >> minutes;
 
-    // std::cin.good() checks if inputs are of correct types
-    if (!(std::cin.good() && hours >= kMinHours && hours < kMaxHours && minutes >= kMinMinutes && minutes < kMaxMinutes)) {
+    if (hours < kMinHoursInclude || hours > kMaxHoursInclude || minutes < kMinMinutesInclude || minutes > kMaxMinutesInclude) {
         std::cout << "введены недопустимые данные" << std::endl;
         return 1;
     }
 
-    if (hours == kHalfADay && minutes == kMinMinutes) {
+    if (hours == kHalfADay && minutes == kMinMinutesInclude) {
         std::cout << "полдень" << std::endl;
         return 0;
-    } else if (hours == kMinHours && minutes == kMinMinutes) {
+    } else if (hours == kMinHoursInclude && minutes == kMinMinutesInclude) {
         std::cout << "полночь" << std::endl;
         return 0;
     }
 
-    if (hours == kHalfADay) {
-        std::cout << hours;
-    } else {
-        std::cout << hours % kHalfADay;
+    int formatedHours = hours;
+    if (hours > kHalfADay) {
+        formatedHours = hours - kHalfADay;
     }
 
-    if (hours % kHalfADay == kOneHour) {
+    if (formatedHours == kOneHours) {
         std::cout << " час";
-    } else if (hours % kHalfADay < kFiveHour) {
+    } else if (formatedHours < kFiveHours) {
         std::cout << " часа";
     } else {
         std::cout << " часов";
     }
 
-    if (minutes != kMinMinutes) {
+    int remainderOfMinutesByTena = minutes % kNumberToGetRemainderByTen;
+    if (minutes != kMinMinutesInclude) {
         std::cout << " " << minutes;
-        if (minutes % kMinutesModTen == kOneMinute) {
+        if (remainderOfMinutesByTena == kOneMinutes) {
             std::cout << " минута";
-        } else if (minutes / kMinutesDevideTen != kFirstTenMinutes && minutes % kMinutesModTen <= kFourMinute) {
+        } else if (minutes / kNumberToGetIntegerDivisionByTen != 1 && remainderOfMinutesByTena <= kFourMinutes) {
             std::cout << " минуты";
         } else {
             std::cout << " минут";
         }
     }
 
-    if (kMorningHours <= hours && hours < kHalfADay) {
-        std::cout << " утра";
-    } else if (kHalfADay <= hours && hours < kEveningHours) {
-        std::cout << " дня";
-    } else if (kEveningHours <= hours && hours < kMaxHours) {
-        std::cout << " вечера";
-    } else {
+    if (hours < kMorningBeginsHours) {
         std::cout << " ночи";
+    } else if (hours < kHalfADay) {
+        std::cout << " утра";
+    } else if (hours < kEveningBeginsHours) {
+        std::cout << " дня";
+    } else {
+        std::cout << " вечера";
     }
 
-    if (minutes == kMinMinutes) {
+    if (minutes == kMinMinutesInclude) {
         std::cout << " ровно";
     }
 
