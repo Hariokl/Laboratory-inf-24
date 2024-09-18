@@ -6,14 +6,14 @@ const int kFiveHour = 5;
 
 const int kOneMinute = 1;
 const int kFourMinute = 4;
-const int kFirstTenMinute = 1;
+const int kFirstTenMinutes = 1;  // ???
 
 const int kMinTime = 0;
-const int kMorning = 5;
-const int kModTen = 10;
-const int kDevideByTen = 10;
+const int kMorningHours = 5;
+const int kMinutesModTen = 10;
+const int kMinutesDevideTen = 10;
 const int kHalfADay = 12;
-const int kEvening = 18;
+const int kEveningHours = 18;
 const int kMaxHours = 24;
 const int kMaxMinutes = 60;
 }  // namespace
@@ -53,20 +53,20 @@ int main() {
 
     if (minutes != kMinTime) {
         std::cout << " " << minutes;
-        if (minutes % kModTen == kOneMinute) {
+        if (minutes % kMinutesModTen == kOneMinute) {
             std::cout << " минута";
-        } else if (minutes / kDevideByTen != kFirstTenMinute && minutes % kModTen <= kFourMinute) {
+        } else if (minutes / kMinutesDevideTen != kFirstTenMinutes && minutes % kMinutesModTen <= kFourMinute) {
             std::cout << " минуты";
         } else {
             std::cout << " минут";
         }
     }
 
-    if (kMorning <= hours && hours < kHalfADay) {
+    if (kMorningHours <= hours && hours < kHalfADay) {
         std::cout << " утра";
-    } else if (kHalfADay <= hours && hours < kEvening) {
+    } else if (kHalfADay <= hours && hours < kEveningHours) {
         std::cout << " дня";
-    } else if (kEvening <= hours && hours < kMaxHours) {
+    } else if (kEveningHours <= hours && hours < kMaxHours) {
         std::cout << " вечера";
     } else {
         std::cout << " ночи";
