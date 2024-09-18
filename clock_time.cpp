@@ -25,7 +25,7 @@ int main() {
     std::cin >> hours >> minutes;
 
     // std::cin.good() checks if inputs are of correct types
-    if (!(std::cin.good() && hours >= kMaxHours && hours < kMaxHours && minutes >= kMinMinutes && minutes < kMaxMinutes)) {
+    if (!(std::cin.good() && hours >= kMinHours && hours < kMaxHours && minutes >= kMinMinutes && minutes < kMaxMinutes)) {
         std::cout << "введены недопустимые данные" << std::endl;
         return 1;
     }
