@@ -1,11 +1,8 @@
 #include <iostream>
 
 namespace {
-const int kOneHours = 1;   //
-const int kFiveHours = 5;  //
-
-const int kOneMinutes = 1;   //
-const int kFourMinutes = 4;  //
+const int kNominalCase = 1;
+const int kGenitiveCaseHighBoundary = 5;
 
 const int kMinHoursInclude = 0;
 const int kMinMinutesInclude = 0;
@@ -45,20 +42,23 @@ int main() {
     }
     std::cout << formatedHours;
 
-    if (formatedHours == kOneHours) {
+    if (formatedHours == kNominalCase) {
         std::cout << " час";
-    } else if (formatedHours < kFiveHours) {
+    } else if (formatedHours < kGenitiveCaseHighBoundary) {
         std::cout << " часа";
     } else {
         std::cout << " часов";
     }
 
-    int remainderOfMinutesByTena = minutes % kNumberToGetRemainderByTen;
+    int remainderOfMinutesByTen = minutes % kNumberToGetRemainderByTen;
+    // dd
     if (minutes != kMinMinutesInclude) {
         std::cout << " " << minutes;
-        if (remainderOfMinutesByTena == kOneMinutes) {
+        if (minutes / kNumberToGetIntegerDivisionByTen == 1) {
+            std::cout << " минут";
+        } else if (remainderOfMinutesByTen == kNominalCase) {
             std::cout << " минута";
-        } else if (minutes / kNumberToGetIntegerDivisionByTen != 1 && remainderOfMinutesByTena <= kFourMinutes) {
+        } else if (remainderOfMinutesByTen < kGenitiveCaseHighBoundary) {
             std::cout << " минуты";
         } else {
             std::cout << " минут";
