@@ -8,7 +8,8 @@ const int kOneMinute = 1;
 const int kFourMinute = 4;
 const int kFirstTenMinutes = 1;  // ???
 
-const int kMinTime = 0;
+const int kMinHours = 0;
+const int kMinMinutes = 0;
 const int kMorningHours = 5;
 const int kMinutesModTen = 10;
 const int kMinutesDevideTen = 10;
@@ -19,20 +20,20 @@ const int kMaxMinutes = 60;
 }  // namespace
 
 int main() {
-    int hours = kMinTime;
-    int minutes = kMinTime;
+    int hours = kMinHours;
+    int minutes = kMinMinutes;
     std::cin >> hours >> minutes;
 
     // std::cin.good() checks if inputs are of correct types
-    if (!(std::cin.good() && hours >= kMinTime && hours < kMaxHours && minutes >= kMinTime && minutes < kMaxMinutes)) {
+    if (!(std::cin.good() && hours >= kMaxHours && hours < kMaxHours && minutes >= kMinMinutes && minutes < kMaxMinutes)) {
         std::cout << "введены недопустимые данные" << std::endl;
         return 1;
     }
 
-    if (hours == kHalfADay && minutes == kMinTime) {
+    if (hours == kHalfADay && minutes == kMinMinutes) {
         std::cout << "полдень" << std::endl;
         return 0;
-    } else if (hours == kMinTime && minutes == kMinTime) {
+    } else if (hours == kMinHours && minutes == kMinMinutes) {
         std::cout << "полночь" << std::endl;
         return 0;
     }
@@ -51,7 +52,7 @@ int main() {
         std::cout << " часов";
     }
 
-    if (minutes != kMinTime) {
+    if (minutes != kMinMinutes) {
         std::cout << " " << minutes;
         if (minutes % kMinutesModTen == kOneMinute) {
             std::cout << " минута";
@@ -72,7 +73,7 @@ int main() {
         std::cout << " ночи";
     }
 
-    if (minutes == kMinTime) {
+    if (minutes == kMinMinutes) {
         std::cout << " ровно";
     }
 
