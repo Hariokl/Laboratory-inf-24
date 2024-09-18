@@ -22,7 +22,12 @@ const int kMaxMinutes = 60;
 int main() {
     int hours = kMinHours;
     int minutes = kMinMinutes;
-    std::cin >> hours >> minutes;
+
+    // std::cin >> hours >> minutes;
+    std::cout << "Введите часы: ";
+    std::cin >> hours;
+    std::cout << "Введите минуты: ";
+    std::cin >> minutes;
 
     // std::cin.good() checks if inputs are of correct types
     if (!(std::cin.good() && hours >= kMinHours && hours < kMaxHours && minutes >= kMinMinutes && minutes < kMaxMinutes)) {
