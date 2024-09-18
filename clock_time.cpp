@@ -10,6 +10,7 @@ const int kFive = 5;
 const int kMinTime = 0;
 const int kMorning = 5;
 const int kModTen = 10;
+const int kDevideByTen = 10;
 const int kHalfADay = 12;
 const int kEvening = 18;
 const int kMaxHours = 24;
@@ -49,7 +50,7 @@ int main() {
         std::cout << " " << minutes;
         if (minutes % kModTen == kOne) {
             std::cout << " минута";
-        } else if (minutes % kModTen == kTwo || minutes % kModTen == kThree || minutes % kModTen == kFour) {
+        } else if (minutes / kDevideByTen != 1 && (minutes % kModTen == kTwo || minutes % kModTen == kThree || minutes % kModTen == kFour)) {
             std::cout << " минуты";
         } else {
             std::cout << " минут";
