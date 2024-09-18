@@ -36,7 +36,11 @@ int main() {
         return 0;
     }
 
-    std::cout << hours % kHalfADay;
+    if (hours == kHalfADay) {
+        std::cout << hours;
+    } else {
+        std::cout << hours % kHalfADay;
+    }
 
     if (hours % kHalfADay == kOne) {
         std::cout << " час";
