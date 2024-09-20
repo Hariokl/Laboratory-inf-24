@@ -2,16 +2,20 @@
 
 namespace {
 const int kNominalCase = 1;
-const int kGenitiveCaseHighBoundary = 5;
+const int kGenitiveCaseHighBoundary = 4;
+const int kPluralGenitiveCaseLowBoundary = 10;
+const int kPluralGenitiveCaseHighBoundary = 19;
+
+const int kNumberToGetRemainderByTen = 10;
+const int kNumberToGetIntegerDivisionByTen = 10;
+
+const int kNightBeginsHours = 0;
+const int kMorningBeginsHours = 5;
+const int kMiddayBeginsHours = 12;
+const int kEveningBeginsHours = 18;
 
 const int kMinHoursInclude = 0;
 const int kMinMinutesInclude = 0;
-const int kMorningBeginsHours = 5;
-const int kNumberToGetRemainderByTen = 10;        //
-const int kNumberToGetIntegerDivisionByTen = 10;  //
-const int kHalfADay = 12;
-const int kEveningBeginsHours = 18;
-const int kNightBeginsHours = 0;
 const int kMaxHoursInclude = 23;
 const int kMaxMinutesInclude = 59;
 }  // namespace
@@ -28,7 +32,7 @@ int main() {
         return 1;
     }
 
-    if (hours == kHalfADay && minutes == kMinMinutesInclude) {
+    if (hours == kMiddayBeginsHours && minutes == kMinMinutesInclude) {
         std::cout << "полдень" << std::endl;
         return 0;
     } else if (hours == kMinHoursInclude && minutes == kMinMinutesInclude) {
@@ -37,28 +41,27 @@ int main() {
     }
 
     int formatedHours = hours;
-    if (hours > kHalfADay) {
-        formatedHours = hours - kHalfADay;
+    if (hours > kMiddayBeginsHours) {
+        formatedHours = hours - kMiddayBeginsHours;
     }
     std::cout << formatedHours;
 
     if (formatedHours == kNominalCase) {
         std::cout << " час";
-    } else if (formatedHours < kGenitiveCaseHighBoundary) {
+    } else if (formatedHours <= kGenitiveCaseHighBoundary) {
         std::cout << " часа";
     } else {
         std::cout << " часов";
     }
 
     int remainderOfMinutesByTen = minutes % kNumberToGetRemainderByTen;
-    // dd
     if (minutes != kMinMinutesInclude) {
         std::cout << " " << minutes;
-        if (minutes / kNumberToGetIntegerDivisionByTen == 1) {
+        if (minutes >= kPluralGenitiveCaseLowBoundary && minutes <= kPluralGenitiveCaseHighBoundary) {
             std::cout << " минут";
         } else if (remainderOfMinutesByTen == kNominalCase) {
             std::cout << " минута";
-        } else if (remainderOfMinutesByTen < kGenitiveCaseHighBoundary) {
+        } else if (remainderOfMinutesByTen <= kGenitiveCaseHighBoundary) {
             std::cout << " минуты";
         } else {
             std::cout << " минут";
@@ -67,7 +70,7 @@ int main() {
 
     if (hours < kMorningBeginsHours) {
         std::cout << " ночи";
-    } else if (hours < kHalfADay) {
+    } else if (hours < kMiddayBeginsHours) {
         std::cout << " утра";
     } else if (hours < kEveningBeginsHours) {
         std::cout << " дня";
