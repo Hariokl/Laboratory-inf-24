@@ -1,4 +1,7 @@
 #include <iostream>
+#include <cmath.h>
+#include <task_functions.h>
+
 
 namespace {
     const int taskOneNumber = 1;
@@ -7,33 +10,51 @@ namespace {
     const int taskFourNumber = 4;
 }
 
-int taskOne() {
-    int n = 0, m = 0;
-    std::cin >> n >> m;
-    for (int i = 1; i <= n; i++)
-
-
-}
-
 int main() {
-    int taskToDo = 1;
-    while (True) {
-        std::cout << "\nВыберите задачу из списка и напишите её номер для выподнения:";
-        for (int i = 0; i < 4; i++){
-            std::cout << "\n\tЗадача №" << i;
+    int userTaskChoice;
+    char userChoiceToContinue;
+
+    while (true) {
+        std::cout << "\nВыберите задачу из списка и напишите её номер для выподнения:\n";
+        for (int i = 1; i <= 4; i++) {
+            std::cout << "\tЗадача №" << i << std::endl;
         }
-        std::cin >> taskToDo;
-        std::cout << "Задача №" << taskToDo << std::endl;
-        if (taskToDo == taskOneNumber){
-            std::cout << taskOne() << std::endl;
-        } else if (taskToDo == taskTwoNumber){
-            std::cout << taskTwo() << std::endl;
-        } else if (taskToDo == taskThreeNumber){
-            std::cout << taskThree() << std::endl;
-        } else if (taskToDo == taskFourNumber){
-            std::cout << taskFour() << std::endl;
+
+        while (true) {
+            std::cin >> userTaskChoice;
+            if (userTaskChoice >= taskOneNumber && userTaskChoice <= taskFourNumber) {
+                break;
+            } else if (!std::cin.good()) {
+                return 1;
+            }
+            std::cout << "Неправильный ввод, попробуй ещё раз." << std::endl;
         }
-        std::cout << "Продолжить работу? (y/n)";
+
+        std::cout << "\nЗадача №" << userTaskChoice << std::endl;
+        switch (userTaskChoice) {
+            case taskOneNumber:
+                std::cout << taskOne() << std::endl;
+                break;
+            case taskTwoNumber:
+                std::cout << taskTwo() << std::endl;
+                break;
+            case taskThreeNumber:
+                std::cout << taskThree() << std::endl;
+                break;
+            case taskFourNumber:
+                std::cout << taskFour() << std::endl;
+                break;
+        }
+
+        std::cout << "\nПродолжить работу? (y/n)" << std::endl;
+        std::cin >> userChoiceToContinue;
+        if (userChoiceToContinue == 'n') {
+            break;
+        } else if (userChoiceToContinue == 'y') {
+            continue;
+        } else {
+            return 1;
+        }
     }
     return 0;
 }
