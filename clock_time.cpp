@@ -61,7 +61,8 @@ int main() {
         std::cout << ' ' << minutes;
         if (remainderOfMinutesByTen == kNominalCase && (minutes < kPluralGenitiveCaseLowBoundary || minutes > kPluralGenitiveCaseHighBoundary)) {
             std::cout << " минута";
-        } else if (remainderOfMinutesByTen <= kGenitiveCaseHighBoundary && (minutes < kPluralGenitiveCaseLowBoundary || minutes > kPluralGenitiveCaseHighBoundary)) {
+        } else if (remainderOfMinutesByTen <= kGenitiveCaseHighBoundary &&
+                   (minutes < kPluralGenitiveCaseLowBoundary || minutes > kPluralGenitiveCaseHighBoundary)) {
             std::cout << " минуты";
         } else {
             std::cout << " минут";
