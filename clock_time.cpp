@@ -10,42 +10,42 @@ const int kPluralGenitiveCaseHighBoundary = 19;
 const int kNumberToGetRemainderByTen = 10;
 const int kNumberToGetIntegerDivisionByTen = 10;
 
-const int kNightMinHours = 0;
-const int kNightMaxHours = 4;
-const int kMorningMinHours = 5;
-const int kMorningMaxHours = 11;
-const int kMiddayMinHours = 12;
-const int kMiddayMaxHours = 17;
-const int kEveningMinHours = 18;
-const int kEveningMaxHours = 23;
+const int kNightBeginHours = 0;
+const int kNightEndHours = 4;
+const int kMorningBeginHours = 5;
+const int kMorningEndHours = 11;
+const int kMiddayBeginHours = 12;
+const int kMiddayEndHours = 17;
+const int kEveningBeginHours = 18;
+const int kEveningEndHours = 23;
 
-const int kMinHoursInclude = 0;
-const int kMinMinutesInclude = 0;
-const int kMaxHoursInclude = 23;
-const int kMaxMinutesInclude = 59;
+const int kBeginHours = 0;
+const int kBeginMinutes = 0;
+const int kEndHours = 23;
+const int kEndMinutes = 59;
 }  // namespace
 
 int main() {
-    int hours = kMinHoursInclude;
-    int minutes = kMinMinutesInclude;
+    int hours = kBeginHours;
+    int minutes = kBeginMinutes;
 
     std::cout << "Введите время в формате: часы(от 0 минут до 23 часов включительно) минуты(от 0 минут до 59 минут включительно)" << std::endl;
     std::cin >> hours >> minutes;
 
-    if (!std::cin.good() || (hours < kMinHoursInclude || hours > kMaxHoursInclude || minutes < kMinMinutesInclude || minutes > kMaxMinutesInclude)) {
+    if (!std::cin.good() || (hours < kBeginHours || hours > kEndHours || minutes < kBeginMinutes || minutes > kEndMinutes)) {
         std::cout << "введены недопустимые данные" << std::endl;
         return 1;
     }
 
-    if (hours == kMiddayMinHours && minutes == kMinMinutesInclude) {
+    if (hours == kMiddayBeginHours && minutes == kBeginMinutes) {
         std::cout << "полдень" << std::endl;
         return 0;
-    } else if (hours == kMinHoursInclude && minutes == kMinMinutesInclude) {
+    } else if (hours == kBeginHours && minutes == kBeginMinutes) {
         std::cout << "полночь" << std::endl;
         return 0;
     }
 
-    int formatedHours = hours - kMiddayMinHours * (hours > kMiddayMinHours);
+    int formatedHours = hours - kMiddayBeginHours * (hours > kMiddayBeginHours);
     std::cout << formatedHours;
 
     if (formatedHours == kNominalCase) {
@@ -56,12 +56,12 @@ int main() {
         std::cout << " часов";
     }
 
-    int remainderOfMinutesByTen = minutes % kNumberToGetRemainderByTen;
-    if (minutes != kMinMinutesInclude) {
+    int remainderOfBeginMinutesByTen = minutes % kNumberToGetRemainderByTen;
+    if (minutes != kBeginMinutes) {
         std::cout << ' ' << minutes;
-        if (remainderOfMinutesByTen == kNominalCase && (minutes < kPluralGenitiveCaseLowBoundary || minutes > kPluralGenitiveCaseHighBoundary)) {
+        if (remainderOfBeginMinutesByTen == kNominalCase && (minutes < kPluralGenitiveCaseLowBoundary || minutes > kPluralGenitiveCaseHighBoundary)) {
             std::cout << " минута";
-        } else if (remainderOfMinutesByTen <= kGenitiveCaseHighBoundary &&
+        } else if (remainderOfBeginMinutesByTen <= kGenitiveCaseHighBoundary &&
                    (minutes < kPluralGenitiveCaseLowBoundary || minutes > kPluralGenitiveCaseHighBoundary)) {
             std::cout << " минуты";
         } else {
@@ -69,17 +69,17 @@ int main() {
         }
     }
 
-    if (hours >= kMorningMinHours && hours <= kMorningMaxHours) {
+    if (hours >= kMorningBeginHours && hours <= kMorningEndHours) {
         std::cout << " утра";
-    } else if (hours >= kMiddayMinHours && hours <= kMiddayMaxHours) {
+    } else if (hours >= kMiddayBeginHours && hours <= kMiddayEndHours) {
         std::cout << " дня";
-    } else if (hours >= kEveningMinHours && hours <= kEveningMaxHours) {
+    } else if (hours >= kEveningBeginHours && hours <= kEveningEndHours) {
         std::cout << " вечера";
-    } else if (hours >= kNightMinHours && hours <= kNightMaxHours) {
+    } else if (hours >= kNightBeginHours && hours <= kNightEndHours) {
         std::cout << " ночи";
     }
 
-    if (minutes == kMinMinutesInclude) {
+    if (minutes == kBeginMinutes) {
         std::cout << " ровно";
     }
 
