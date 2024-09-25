@@ -40,10 +40,7 @@ int main() {
         return 0;
     }
 
-    int formatedHours = hours;
-    if (hours > kMiddayBeginsHours) {
-        formatedHours -= kMiddayBeginsHours;
-    }
+    int formatedHours = hours - kMiddayBeginsHours * (hours > kMiddayBeginsHours)
     std::cout << formatedHours;
 
     if (formatedHours == kNominalCase) {
