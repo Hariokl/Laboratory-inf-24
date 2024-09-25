@@ -9,10 +9,14 @@ const int kPluralGenitiveCaseHighBoundary = 19;
 const int kNumberToGetRemainderByTen = 10;
 const int kNumberToGetIntegerDivisionByTen = 10;
 
-const int kNightBeginsHours = 0;
-const int kMorningBeginsHours = 5;
-const int kMiddayBeginsHours = 12;
-const int kEveningBeginsHours = 18;
+const int kNightMin = 0;
+const int kNightMax = 4;
+const int kMorningMin = 5;
+const int kMorningMax = 11;
+const int kMiddayMin = 12;
+const int kMiddayMax = 17;
+const int kEveningMin = 18;
+const int kEveningMax = 23;
 
 const int kMinHoursInclude = 0;
 const int kMinMinutesInclude = 0;
@@ -27,12 +31,12 @@ int main() {
     std::cout << "Введите время в формате: часы(от 0 минут до 23 часов включительно) минуты(от 0 минут до 59 минут включительно)" << std::endl;
     std::cin >> hours >> minutes;
 
-    if (hours < kMinHoursInclude || hours > kMaxHoursInclude || minutes < kMinMinutesInclude || minutes > kMaxMinutesInclude) {
+    if (!std::good() && hours < kMinHoursInclude || hours > kMaxHoursInclude || minutes < kMinMinutesInclude || minutes > kMaxMinutesInclude) {
         std::cout << "введены недопустимые данные" << std::endl;
         return 1;
     }
 
-    if (hours == kMiddayBeginsHours && minutes == kMinMinutesInclude) {
+    if (hours == kMiddayMin && minutes == kMinMinutesInclude) {
         std::cout << "полдень" << std::endl;
         return 0;
     } else if (hours == kMinHoursInclude && minutes == kMinMinutesInclude) {
@@ -40,7 +44,7 @@ int main() {
         return 0;
     }
 
-    int formatedHours = hours - kMiddayBeginsHours * (hours > kMiddayBeginsHours)
+    int formatedHours = hours - kMiddayMin * (hours > kMiddayMin)
     std::cout << formatedHours;
 
     if (formatedHours == kNominalCase) {
@@ -65,14 +69,14 @@ int main() {
         }
     }
 
-    if (hours < kMorningBeginsHours) {
-        std::cout << " ночи";
-    } else if (hours < kMiddayBeginsHours) {
+    if (hours >= kMorningMin && hours <= kMorningMax) {
         std::cout << " утра";
-    } else if (hours < kEveningBeginsHours) {
+    } else if (hours >= kMiddayMin && hours <= kMiddayMax) {
         std::cout << " дня";
-    } else {
+    } else if (hours >= kEveningMin && hours <= kEveningMax){
         std::cout << " вечера";
+    } else if (hours >= kNightMin && hours <= kNightMax){
+        std::cout << " ночи";
     }
 
     if (minutes == kMinMinutesInclude) {
