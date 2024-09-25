@@ -10,14 +10,14 @@ const int kPluralGenitiveCaseHighBoundary = 19;
 const int kNumberToGetRemainderByTen = 10;
 const int kNumberToGetIntegerDivisionByTen = 10;
 
-const int kNightMin = 0;
-const int kNightMax = 4;
-const int kMorningMin = 5;
-const int kMorningMax = 11;
-const int kMiddayMin = 12;
-const int kMiddayMax = 17;
-const int kEveningMin = 18;
-const int kEveningMax = 23;
+const int kNightMinHours = 0;
+const int kNightMaxHours = 4;
+const int kMorningMinHours = 5;
+const int kMorningMaxHours = 11;
+const int kMiddayMinHours = 12;
+const int kMiddayMaxHours = 17;
+const int kEveningMinHours = 18;
+const int kEveningMaxHours = 23;
 
 const int kMinHoursInclude = 0;
 const int kMinMinutesInclude = 0;
@@ -37,7 +37,7 @@ int main() {
         return 1;
     }
 
-    if (hours == kMiddayMin && minutes == kMinMinutesInclude) {
+    if (hours == kMiddayMinHours && minutes == kMinMinutesInclude) {
         std::cout << "полдень" << std::endl;
         return 0;
     } else if (hours == kMinHoursInclude && minutes == kMinMinutesInclude) {
@@ -45,7 +45,7 @@ int main() {
         return 0;
     }
 
-    int formatedHours = hours - kMiddayMin * (hours > kMiddayMin);
+    int formatedHours = hours - kMiddayMinHours * (hours > kMiddayMinHours);
     std::cout << formatedHours;
 
     if (formatedHours == kNominalCase) {
@@ -68,13 +68,13 @@ int main() {
         }
     }
 
-    if (hours >= kMorningMin && hours <= kMorningMax) {
+    if (hours >= kMorningMinHours && hours <= kMorningMaxHours) {
         std::cout << " утра";
-    } else if (hours >= kMiddayMin && hours <= kMiddayMax) {
+    } else if (hours >= kMiddayMinHours && hours <= kMiddayMaxHours) {
         std::cout << " дня";
-    } else if (hours >= kEveningMin && hours <= kEveningMax) {
+    } else if (hours >= kEveningMinHours && hours <= kEveningMaxHours) {
         std::cout << " вечера";
-    } else if (hours >= kNightMin && hours <= kNightMax) {
+    } else if (hours >= kNightMinHours && hours <= kNightMaxHours) {
         std::cout << " ночи";
     }
 
