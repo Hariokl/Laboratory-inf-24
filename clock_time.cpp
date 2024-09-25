@@ -2,6 +2,7 @@
 
 namespace {
 const int kNominalCase = 1;
+const int kGenitiveCaseLowBoundary = 2;
 const int kGenitiveCaseHighBoundary = 4;
 const int kPluralGenitiveCaseLowBoundary = 10;
 const int kPluralGenitiveCaseHighBoundary = 19;
@@ -49,7 +50,7 @@ int main() {
 
     if (formatedHours == kNominalCase) {
         std::cout << " час";
-    } else if (formatedHours <= kGenitiveCaseHighBoundary) {
+    } else if (formatedHours >= kGenitiveCaseLowBoundary && formatedHours <= kGenitiveCaseHighBoundary) {
         std::cout << " часа";
     } else {
         std::cout << " часов";
@@ -57,12 +58,10 @@ int main() {
 
     int remainderOfMinutesByTen = minutes % kNumberToGetRemainderByTen;
     if (minutes != kMinMinutesInclude) {
-        std::cout << " " << minutes;
-        if (minutes >= kPluralGenitiveCaseLowBoundary && minutes <= kPluralGenitiveCaseHighBoundary) {
-            std::cout << " минут";
-        } else if (remainderOfMinutesByTen == kNominalCase) {
+        std::cout << ' ' << minutes;
+        if (remainderOfMinutesByTen == kNominalCase && (minutes < kPluralGenitiveCaseLowBoundary || minutes > kPluralGenitiveCaseHighBoundary)) {
             std::cout << " минута";
-        } else if (remainderOfMinutesByTen <= kGenitiveCaseHighBoundary) {
+        } else if (remainderOfMinutesByTen <= kGenitiveCaseHighBoundary && (minutes < kPluralGenitiveCaseLowBoundary || minutes > kPluralGenitiveCaseHighBoundary)) {
             std::cout << " минуты";
         } else {
             std::cout << " минут";
