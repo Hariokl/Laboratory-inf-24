@@ -1,15 +1,15 @@
 #include <iostream>
 
 namespace {
-const int kNominativeMinutes = 1;
+const int kSingularNominativeMinutes = 1;
 const int kSingularGenitiveMinutesLowerBoundary = 2;
 const int kSingularGenitiveMinutesUpperBoundary = 4;
 const int kPluralGenitiveMinutesLowerBoundary = 10;
 const int kPluralGenitiveMinutesUpperBoundary = 19;
 
-const int kNominativeHours = 1;
-const int kGenitiveHoursLowerBoundary = 2;
-const int kGenitiveHoursUpperBoundary = 4;
+const int kSingularNominativeHours = 1;
+const int kSingularGenitiveHoursLowerBoundary = 2;
+const int kSingularGenitiveHoursUpperBoundary = 4;
 
 const int kDecimalBase = 10;
 
@@ -23,8 +23,8 @@ const int kEveningHoursBegin = 18;
 const int kEveningHoursEnd = 23;
 
 const int kMinHours = 0;
-const int kMinMinutes = 0;
 const int kMaxHours = 23;
+const int kMinMinutes = 0;
 const int kMaxMinutes = 59;
 }  // namespace
 
@@ -51,9 +51,9 @@ int main(int, char**) {
     int hoursIn12HoursFormat = hours > kDayHoursBegin ? hours - kDayHoursBegin : hours;
     std::cout << hoursIn12HoursFormat;
 
-    if (hoursIn12HoursFormat == kNominativeHours) {
+    if (hoursIn12HoursFormat == kSingularNominativeHours) {
         std::cout << " час";
-    } else if (hoursIn12HoursFormat >= kGenitiveHoursLowerBoundary && hoursIn12HoursFormat <= kGenitiveHoursUpperBoundary) {
+    } else if (hoursIn12HoursFormat >= kSingularGenitiveHoursLowerBoundary && hoursIn12HoursFormat <= kSingularGenitiveHoursUpperBoundary) {
         std::cout << " часа";
     } else {
         std::cout << " часов";
@@ -62,7 +62,7 @@ int main(int, char**) {
     if (minutes != kMinMinutes) {
         int lastDigitMinutes = minutes % kDecimalBase;
         std::cout << ' ' << minutes;
-        if (lastDigitMinutes == kNominativeMinutes &&
+        if (lastDigitMinutes == kSingularNominativeMinutes &&
             (minutes < kPluralGenitiveMinutesLowerBoundary || minutes > kPluralGenitiveMinutesUpperBoundary)) {
             std::cout << " минута";
         } else if (lastDigitMinutes >= kSingularGenitiveMinutesLowerBoundary && lastDigitMinutes <= kSingularGenitiveMinutesUpperBoundary &&
