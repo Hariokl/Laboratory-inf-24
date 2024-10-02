@@ -2,8 +2,11 @@
 
 
 int taskOne() {
-    int n = 0, m = 0;
+    int n = 0;
+    int m = 0;
+    std::cout << "Введите числа n и m:" << std::endl;
     std::cin >> n >> m;
+
     for (int i = 1; i <= n; i++) {}
     return 0;
 }

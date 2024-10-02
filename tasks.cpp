@@ -1,6 +1,4 @@
 #include <iostream>
-#include <cmath.h>
-#include <task_functions.h>
 
 
 namespace {
@@ -8,54 +6,89 @@ namespace {
     const int taskTwoNumber = 2;
     const int taskThreeNumber = 3;
     const int taskFourNumber = 4;
+
+}
+
+int taskOne() {
+    int n = 0;
+    int m = 0;
+    std::cout << "Введите натуральные числа n и m:" << std::endl;
+    std::cin >> n >> m;
+
+    int naturalSum = 0;
+    for (int i = 5; i <= n; i+=5) {
+        if (i % m != 0) {
+            naturalSum += i;
+        }
+    }
+    std::cout << "Ответ на задачу: " << naturalSum << std::endl;
+
+    return 0;
+}
+
+int taskTwo() {
+    int a = 0;
+    std::cout << "Введите число a:" << std::endl;
+    std::cin >> a;
+
+    int S = 0;
+    if (a >= 0) {
+        for (int i = 2; i <= 8; i+=2)
+    }
+
+    return 0;
+}
+
+int taskThree() {
+    return 0;
+}
+
+int taskFour() {
+    return 0;
 }
 
 int main() {
-    int userTaskChoice;
-    char userChoiceToContinue;
+    int userTaskChoice = -1;
+    char userChoiceToContinue = -1;
+    bool isRunning = true;
 
-    while (true) {
+    while (isRunning) {
         std::cout << "\nВыберите задачу из списка и напишите её номер для выподнения:\n";
         for (int i = 1; i <= 4; i++) {
             std::cout << "\tЗадача №" << i << std::endl;
         }
 
-        while (true) {
-            std::cin >> userTaskChoice;
-            if (userTaskChoice >= taskOneNumber && userTaskChoice <= taskFourNumber) {
-                break;
-            } else if (!std::cin.good()) {
-                return 1;
-            }
-            std::cout << "Неправильный ввод, попробуй ещё раз." << std::endl;
+        std::cin >> userTaskChoice;
+        if (!std::cin.good() || userTaskChoice < taskOneNumber || userTaskChoice > taskFourNumber) {
+            std::cout << "Неправильный ввод" << std::endl;
+            return 1;
         }
 
         std::cout << "\nЗадача №" << userTaskChoice << std::endl;
         switch (userTaskChoice) {
             case taskOneNumber:
-                std::cout << taskOne() << std::endl;
+                taskOne();
                 break;
             case taskTwoNumber:
-                std::cout << taskTwo() << std::endl;
+                taskTwo();
                 break;
             case taskThreeNumber:
-                std::cout << taskThree() << std::endl;
+                taskThree();
                 break;
             case taskFourNumber:
-                std::cout << taskFour() << std::endl;
+                taskFour();
                 break;
             default:
-                std::cout << "Неправильный ввод." << std::endl;
+                std::cout << "Неправильный ввод" << std::endl;
+                return 1;
         }
 
         std::cout << "\nПродолжить работу? (y/n)" << std::endl;
         std::cin >> userChoiceToContinue;
-        if (userChoiceToContinue == 'n') {
-            break;
-        } else if (userChoiceToContinue == 'y') {
+        if (userChoiceToContinue == 'y') {
             continue;
         } else {
-            return 1;
+            break;
         }
     }
     return 0;
