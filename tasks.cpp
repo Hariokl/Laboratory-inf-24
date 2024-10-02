@@ -1,14 +1,15 @@
 #include <iostream>
 #include <cmath>
 
-#define PI M_PI
-
 namespace {
 const int taskOneNumber = 1;
 const int taskTwoNumber = 2;
 const int taskThreeNumber = 3;
 const int taskFourNumber = 4;
 const float error = pow(10, -6);
+const int ktaskFourIntermediateSumCaseOne = 3;
+const int ktaskFourIntermediateSumCaseTwo = 5;
+const int ktaskFourIntermediateSumCaseThree = 10;
 }  // namespace
 
 
@@ -51,28 +52,64 @@ int taskTwo() {
 }
 
 int taskThree() {
-    for (float x = .0; x <= 1; x += 0.2){
-        float Y = 1 + x * exp(x) * cos(PI / 4);
+    float Y = .0;
+    float A = .0;
+    float A_last = .0;
+    float S = .0;
+    float S_last = .0;
+    int n = 1;
 
-        float A = 0;
-        float A_last = cos(PI / 4);
-        float S = 1 + cos(PI / 4);
-        float S_last = 1;
-        int n = 1;
-        while (abs(S - S_last) > error) {
+    for (float x = .0; x <= 1; x += 0.2){
+        Y = 1 + x * exp(x) * cos(M_PI / 4);
+
+        A = 0;
+        A_last = cos(M_PI / 4);
+        S = 1 + cos(M_PI / 4);
+        S_last = 1;
+        n = 1;
+        while (S - S_last > error) {
             S_last = S;
             A = A_last / n * x;
             A_last = A;
             S += A;
             ++n;
         }
-        std::cout << x << "\t" << Y << "\t" << S << "\t" << n + 2 << " " << abs(S - S_last) << std::endl;
+        std::cout << x << "\t" << Y << "\t" << S << "\t" << n + 2 << std::endl;
     }
 
     return 0;
 }
 
 int taskFour() {
+    float y = .0;
+    int n = 0;
+    float x = .0;
+    std::cout << "Введите числа n (n - натуральное число) и x (|x| < 1)" << std::endl;
+    std::cin >> n >> x;
+
+    bool isRunning = true;
+    char userChoiceToContinue = 'n';
+    while (isRunning) {
+        float A_last = 1.;
+        for (int i = 1; i <= n; i++) {
+            y += A_last * x / i;
+            A_last = A_last * x * (-1);
+            if (i == ktaskFourIntermediateSumCaseOne || i == ktaskFourIntermediateSumCaseTwo || i == ktaskFourIntermediateSumCaseThree) {
+                std::cout << "Промежуточное значение суммы при количестве слагаемых " << i << ": " << y << std::endl;
+            }
+        }
+        std::cout << "Значение искомой суммы: " << y << std::endl;
+        std::cout << "Хотите продолжить вычислять? (y/n)" << std::endl;
+        std::cin >> userChoiceToContinue;
+        if (userChoiceToContinue == 'y') {
+            std::cout << "Введите новое число n:" << std::endl;
+            std::cin >> n;
+        } else {
+            isRunning = false;
+        }
+
+    }
+
     return 0;
 }
 
