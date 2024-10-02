@@ -52,12 +52,12 @@ int taskTwo() {
 
 int taskThree() {
     for (float x = .0; x <= 1; x += 0.2){
-        int Y = 1 + x * exp(x) * cos(PI / 4);
+        float Y = 1 + x * exp(x) * cos(PI / 4);
 
-        int A = 0;
-        int A_last = cos(PI / 4);
-        int S = 1 + cos(PI / 4);
-        int S_last = 1;
+        float A = 0;
+        float A_last = cos(PI / 4);
+        float S = 1 + cos(PI / 4);
+        float S_last = 1;
         int n = 1;
         while (abs(S - S_last) > error) {
             S_last = S;
