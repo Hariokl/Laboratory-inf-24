@@ -44,6 +44,8 @@ int main() {
             case taskFourNumber:
                 std::cout << taskFour() << std::endl;
                 break;
+            default:
+                std::cout << "Неправильный ввод." << std::endl;
         }
 
         std::cout << "\nПродолжить работу? (y/n)" << std::endl;
