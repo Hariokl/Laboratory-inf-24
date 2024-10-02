@@ -35,7 +35,7 @@ int main(int, char**) {
     std::cout << "Введите время в формате: часы (от 0 минут до 23 часов включительно) минуты (от 0 минут до 59 минут включительно)" << std::endl;
     std::cin >> hours >> minutes;
 
-    if (!std::cin.good() || hours < kMinHours || hours > kMaxHours || minutes < kMinMinutes || minutes > kMaxMinutes) {
+    if (std::cin.fail() || hours < kMinHours || hours > kMaxHours || minutes < kMinMinutes || minutes > kMaxMinutes) {
         std::cout << "введены недопустимые данные" << std::endl;
         return 1;
     }
