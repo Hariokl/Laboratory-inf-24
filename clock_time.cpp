@@ -1,15 +1,15 @@
 #include <iostream>
 
 namespace {
-const int kNominativeSingularMinutes = 1;
-const int kSingularGenitiveLowerBoundaryMinutes = 2;
-const int kSingularGenitiveUpperBoundaryMinutes = 4;
-const int kPluralGenitiveLowerBoundaryMinutes = 10;
-const int kPluralGenitiveUpperBoundaryMinutes = 19;
+const int kNominativeMinutes = 1;
+const int kSingularGenitiveMinutesLowerBoundary = 2;
+const int kSingularGenitiveMinutesUpperBoundary = 4;
+const int kPluralGenitiveMinutesLowerBoundary = 10;
+const int kPluralGenitiveMinutesUpperBoundary = 19;
 
-const int kNominativeSingularHours = 1;
-const int kSingularGenitiveLowerBoundaryHours = 2;
-const int kSingularGenitiveUpperBoundaryHours = 4;
+const int kNominativeHours = 1;
+const int kGenitiveHoursLowerBoundary = 2;
+const int kGenitiveHoursUpperBoundary = 4;
 
 const int kDecimalBase = 10;
 
@@ -28,7 +28,7 @@ const int kMaxHours = 23;
 const int kMaxMinutes = 59;
 }  // namespace
 
-int main() {
+int main(int, char**) {
     int hours = 0;
     int minutes = 0;
 
@@ -48,12 +48,12 @@ int main() {
         return 0;
     }
 
-    int hours12Format = hours > kDayHoursBegin ? hours - kDayHoursBegin : hours;
+    int hoursIn12HoursFormat = hours > kDayHoursBegin ? hours - kDayHoursBegin : hours;
     std::cout << hours12Format;
 
-    if (hours12Format == kNominativeSingularHours) {
+    if (hoursIn12HoursFormat == kNominativeHours) {
         std::cout << " час";
-    } else if (hours12Format >= kSingularGenitiveLowerBoundaryHours && hours12Format <= kSingularGenitiveUpperBoundaryHours) {
+    } else if (hoursIn12HoursFormat >= kGenitiveHoursLowerBoundary && hoursIn12HoursFormat <= kGenitiveHoursUpperBoundary) {
         std::cout << " часа";
     } else {
         std::cout << " часов";
@@ -62,11 +62,11 @@ int main() {
     if (minutes != kMinMinutes) {
         int lastDigitMinutes = minutes % kDecimalBase;
         std::cout << ' ' << minutes;
-        if (lastDigitMinutes == kNominativeSingularMinutes &&
-            (minutes < kPluralGenitiveLowerBoundaryMinutes || minutes > kPluralGenitiveUpperBoundaryMinutes)) {
+        if (lastDigitMinutes == kNominativeMinutes &&
+            (minutes < kPluralGenitiveMinutesLowerBoundary || minutes > kPluralGenitiveMinutesUpperBoundary)) {
             std::cout << " минута";
-        } else if (lastDigitMinutes >= kSingularGenitiveLowerBoundaryMinutes && lastDigitMinutes <= kSingularGenitiveUpperBoundaryMinutes &&
-                   (minutes < kPluralGenitiveLowerBoundaryMinutes || minutes > kPluralGenitiveUpperBoundaryMinutes)) {
+        } else if (lastDigitMinutes >= kSingularGenitiveMinutesLowerBoundary && lastDigitMinutes <= kSingularGenitiveMinutesUpperBoundary &&
+                   (minutes < kPluralGenitiveMinutesLowerBoundary || minutes > kPluralGenitiveMinutesUpperBoundary)) {
             std::cout << " минуты";
         } else {
             std::cout << " минут";
