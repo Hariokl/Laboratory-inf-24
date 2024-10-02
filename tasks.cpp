@@ -1,13 +1,12 @@
 #include <iostream>
-
+#include <cmath>
 
 namespace {
-    const int taskOneNumber = 1;
-    const int taskTwoNumber = 2;
-    const int taskThreeNumber = 3;
-    const int taskFourNumber = 4;
-
-}
+const int taskOneNumber = 1;
+const int taskTwoNumber = 2;
+const int taskThreeNumber = 3;
+const int taskFourNumber = 4;
+}  // namespace
 
 int taskOne() {
     int n = 0;
@@ -16,7 +15,7 @@ int taskOne() {
     std::cin >> n >> m;
 
     int naturalSum = 0;
-    for (int i = 5; i <= n; i+=5) {
+    for (int i = 5; i <= n; i += 5) {
         if (i % m != 0) {
             naturalSum += i;
         }
@@ -31,15 +30,32 @@ int taskTwo() {
     std::cout << "Введите число a:" << std::endl;
     std::cin >> a;
 
-    int S = 0;
+    int S = 1;
     if (a >= 0) {
-        for (int i = 2; i <= 8; i+=2)
+        for (int i = 2; i <= 8; i += 2) {
+            S *= i * i;
+        }
+        S -= a;
+    } else {
+        for (int i = 3; i <= 9; i += 3) {
+            S *= (i - 2);
+        }
     }
+    std::cout << "Ответ на задачу: " << S << std::endl;
 
     return 0;
 }
 
 int taskThree() {
+    int S = 1;
+    int isRunning = true;
+
+    k = cos(pi)
+
+    while (isRunning) {
+
+    }
+
     return 0;
 }
 
