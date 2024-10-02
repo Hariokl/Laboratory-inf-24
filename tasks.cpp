@@ -1,22 +1,21 @@
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 namespace {
-const int taskOneNumber = 1;
-const int taskTwoNumber = 2;
-const int taskThreeNumber = 3;
-const int taskFourNumber = 4;
-const float error = pow(10, -6);
-const int ktaskFourIntermediateSumCaseOne = 3;
-const int ktaskFourIntermediateSumCaseTwo = 5;
-const int ktaskFourIntermediateSumCaseThree = 10;
+const int kTaskOneNumber = 1;
+const int kTaskTwoNumber = 2;
+const int kTaskThreeNumber = 3;
+const int kTaskFourNumber = 4;
+
+const int kTaskFourIntermediateSumCaseOne = 3;
+const int kTaskFourIntermediateSumCaseTwo = 5;
+const int kTaskFourIntermediateSumCaseThree = 10;
 }  // namespace
 
-
-int taskOne() {
+void taskOne() {
     int n = 0;
     int m = 0;
-    std::cout << "Введите натуральные числа n и m:" << std::endl;
+    std::cout << "Введите натуральные числа n и m (m < n):" << std::endl;
     std::cin >> n >> m;
 
     int naturalSum = 0;
@@ -26,11 +25,9 @@ int taskOne() {
         }
     }
     std::cout << "Ответ на задачу: " << naturalSum << std::endl;
-
-    return 0;
 }
 
-int taskTwo() {
+void taskTwo() {
     int a = 0;
     std::cout << "Введите число a:" << std::endl;
     std::cin >> a;
@@ -47,11 +44,9 @@ int taskTwo() {
         }
     }
     std::cout << "Ответ на задачу: " << S << std::endl;
-
-    return 0;
 }
 
-int taskThree() {
+void taskThree() {
     float Y = .0;
     float A = .0;
     float A_last = .0;
@@ -59,7 +54,7 @@ int taskThree() {
     float S_last = .0;
     int n = 1;
 
-    for (float x = .0; x <= 1; x += 0.2){
+    for (float x = .0; x <= 1; x += 0.2) {
         Y = 1 + x * exp(x) * cos(M_PI / 4);
 
         A = 0;
@@ -67,7 +62,7 @@ int taskThree() {
         S = 1 + cos(M_PI / 4);
         S_last = 1;
         n = 1;
-        while (S - S_last > error) {
+        while (S - S_last > 1e-6) {
             S_last = S;
             A = A_last / n * x;
             A_last = A;
@@ -76,8 +71,6 @@ int taskThree() {
         }
         std::cout << x << "\t" << Y << "\t" << S << "\t" << n + 2 << std::endl;
     }
-
-    return 0;
 }
 
 int taskFour() {
@@ -94,7 +87,7 @@ int taskFour() {
         for (int i = 1; i <= n; i++) {
             y += A_last * x / i;
             A_last = A_last * x * (-1);
-            if (i == ktaskFourIntermediateSumCaseOne || i == ktaskFourIntermediateSumCaseTwo || i == ktaskFourIntermediateSumCaseThree) {
+            if (i != n && (i == kTaskFourIntermediateSumCaseOne || i == kTaskFourIntermediateSumCaseTwo || i == kTaskFourIntermediateSumCaseThree)) {
                 std::cout << "Промежуточное значение суммы при количестве слагаемых " << i << ": " << y << std::endl;
             }
         }
@@ -107,13 +100,12 @@ int taskFour() {
         } else {
             isRunning = false;
         }
-
     }
 
     return 0;
 }
 
-int main() {
+int main(int, char**) {
     int userTaskChoice = -1;
     char userChoiceToContinue = -1;
     bool isRunning = true;
@@ -125,23 +117,23 @@ int main() {
         }
 
         std::cin >> userTaskChoice;
-        if (!std::cin.good() || userTaskChoice < taskOneNumber || userTaskChoice > taskFourNumber) {
+        if (std::cin.fail() || userTaskChoice < kTaskOneNumber || userTaskChoice > kTaskFourNumber) {
             std::cout << "Неправильный ввод" << std::endl;
             return 1;
         }
 
         std::cout << "\nЗадача №" << userTaskChoice << std::endl;
         switch (userTaskChoice) {
-            case taskOneNumber:
+            case kTaskOneNumber:
                 taskOne();
                 break;
-            case taskTwoNumber:
+            case kTaskTwoNumber:
                 taskTwo();
                 break;
-            case taskThreeNumber:
+            case kTaskThreeNumber:
                 taskThree();
                 break;
-            case taskFourNumber:
+            case kTaskFourNumber:
                 taskFour();
                 break;
             default:
@@ -154,7 +146,7 @@ int main() {
         if (userChoiceToContinue == 'y') {
             continue;
         } else {
-            break;
+            isRunning = false;
         }
     }
     return 0;
