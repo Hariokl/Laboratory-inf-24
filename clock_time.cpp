@@ -49,7 +49,7 @@ int main(int, char**) {
     }
 
     int hoursIn12HoursFormat = hours > kDayHoursBegin ? hours - kDayHoursBegin : hours;
-    std::cout << hours12Format;
+    std::cout << hoursIn12HoursFormat;
 
     if (hoursIn12HoursFormat == kNominativeHours) {
         std::cout << " час";
