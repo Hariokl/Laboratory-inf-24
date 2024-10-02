@@ -1,12 +1,16 @@
 #include <iostream>
 #include <cmath>
 
+#define PI M_PI
+
 namespace {
 const int taskOneNumber = 1;
 const int taskTwoNumber = 2;
 const int taskThreeNumber = 3;
 const int taskFourNumber = 4;
+const float error = pow(10, -6);
 }  // namespace
+
 
 int taskOne() {
     int n = 0;
@@ -47,13 +51,22 @@ int taskTwo() {
 }
 
 int taskThree() {
-    int S = 1;
-    int isRunning = true;
+    for (float x = .0; x <= 1; x += 0.2){
+        int Y = 1 + x * exp(x) * cos(PI / 4);
 
-    k = cos(pi)
-
-    while (isRunning) {
-
+        int A = 0;
+        int A_last = cos(PI / 4);
+        int S = 1 + cos(PI / 4);
+        int S_last = 1;
+        int n = 1;
+        while (abs(S - S_last) > error) {
+            S_last = S;
+            A = A_last / n * x;
+            A_last = A;
+            S += A;
+            ++n;
+        }
+        std::cout << x << "\t" << Y << "\t" << S << "\t" << n + 2 << " " << abs(S - S_last) << std::endl;
     }
 
     return 0;
