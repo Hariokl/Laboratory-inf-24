@@ -43,17 +43,17 @@ int main() {
     if (hours == kDayHoursBegin && minutes == kMinMinutes) {
         std::cout << "полдень" << std::endl;
         return 0;
-    } else if (hours == kMinHours && minutes == kMinMinutes) {
+    } else if (hours == kNightHoursBegin && minutes == kMinMinutes) {
         std::cout << "полночь" << std::endl;
         return 0;
     }
 
-    int formatedHours = hours - kDayHoursBegin * (hours > kDayHoursBegin);
-    std::cout << formatedHours;
+    int hours12Format = hours > kDayHoursBegin ? hours - kDayHoursBegin : hours;
+    std::cout << hours12Format;
 
-    if (formatedHours == kNominativeSingularHours) {
+    if (hours12Format == kNominativeSingularHours) {
         std::cout << " час";
-    } else if (formatedHours >= kSingularGenitiveLowerBoundaryHours && formatedHours <= kSingularGenitiveUpperBoundaryHours) {
+    } else if (hours12Format >= kSingularGenitiveLowerBoundaryHours && hours12Format <= kSingularGenitiveUpperBoundaryHours) {
         std::cout << " часа";
     } else {
         std::cout << " часов";
