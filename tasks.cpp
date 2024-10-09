@@ -66,13 +66,13 @@ void taskThree() {
     std::cout << '|' << std::setw(kSetOutputNumberWidth) << 'x';
     std::cout << '|' << std::setw(kSetOutputNumberWidth) << 'Y';
     std::cout << '|' << std::setw(kSetOutputNumberWidth) << 'S';
-    std::cout << '|' << std::setw(kSetOutputNumberWidth) << "N|" << '\n';
+    std::cout << '|' << std::setw(kSetOutputNumberWidth) << 'N' << '|' << '\n';
     for (float x = .0; x <= 1; x += 0.2) {
-        Y = 1 + x * exp(x) * cos(M_PI / 4);
+        Y = 1 + x * std::exp(x) * std::cos(M_PI / 4);
 
         A = 0;
-        A_last = cos(M_PI / 4) * x;
-        S = 1 + cos(M_PI / 4) * x;
+        A_last = std::cos(M_PI / 4) * x;
+        S = 1 + std::cos(M_PI / 4) * x;
         S_last = 1;
         n = 1;
         while (S - S_last > 1e-6) {
@@ -85,7 +85,7 @@ void taskThree() {
         std::cout << '|' << std::setw(kSetOutputNumberWidth) << x;
         std::cout << '|' << std::setw(kSetOutputNumberWidth) << Y;
         std::cout << '|' << std::setw(kSetOutputNumberWidth) << S;
-        std::cout << '|' << std::setw(kSetOutputNumberWidth) << n + 2 << '\n';
+        std::cout << '|' << std::setw(kSetOutputNumberWidth) << n + 2 << '|' << '\n';
     }
 }
 
