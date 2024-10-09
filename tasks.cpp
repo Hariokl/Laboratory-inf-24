@@ -71,8 +71,8 @@ void taskThree() {
         Y = 1 + x * exp(x) * cos(M_PI / 4);
 
         A = 0;
-        A_last = cos(M_PI / 4);
-        S = 1 + cos(M_PI / 4);
+        A_last = cos(M_PI / 4) * x;
+        S = 1 + cos(M_PI / 4) * x;
         S_last = 1;
         n = 1;
         while (S - S_last > 1e-6) {
@@ -109,11 +109,10 @@ void taskFour() {
             y += A_last * x / i;
             A_last = A_last * x * (-1);
             if (i != n && (i == kTaskFourIntermediateSumCaseOne || i == kTaskFourIntermediateSumCaseTwo || i == kTaskFourIntermediateSumCaseThree)) {
-                std::cout << "Промежуточное значение суммы при количестве слагаемых " << std::setw(kSetOutputNumberWidth) << i << ": "
-                          << std::setw(kSetOutputNumberWidth) << y << '\n';
+                std::cout << "Промежуточное значение суммы при n = " << i << ": " << y << '\n';
             }
         }
-        std::cout << "Значение искомой суммы: " << y << '\n';
+        std::cout << "Значение искомой суммы: " << y << "\n\n";
         std::cout << "Хотите продолжить вычислять? (y/n)" << '\n';
         std::cin >> userChoiceToContinue;
         if (userChoiceToContinue == 'y') {
