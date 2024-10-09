@@ -12,15 +12,20 @@ const int kTaskFourIntermediateSumCaseOne = 3;
 const int kTaskFourIntermediateSumCaseTwo = 5;
 const int kTaskFourIntermediateSumCaseThree = 10;
 
-const int kPrecision = 6;        //
-const int kSetNumberWidth = 11;  //
+const int kPrecision = 6;              //
+const int kSetOutputNumberWidth = 11;  //
 }  // namespace
 
 void taskOne() {
     int n = 0;
     int m = 0;
-    std::cout << "Введите натуральные числа n и m (m < n):\n";
+    std::cout << "Введите натуральные числа n и m (m < n):" << '\n';
     std::cin >> n >> m;
+
+    if (m >= n || m < 0) {
+        std::cout << "Были введены неправильные данные." << '\n';
+        return;
+    }
 
     int naturalSum = 0;
     for (int i = 5; i <= n; i += 5) {
@@ -28,12 +33,12 @@ void taskOne() {
             naturalSum += i;
         }
     }
-    std::cout << "Ответ на задачу: " << naturalSum << std::endl;
+    std::cout << "Ответ на задачу: " << naturalSum << '\n';
 }
 
 void taskTwo() {
     int a = 0;
-    std::cout << "Введите число a:\n";
+    std::cout << "Введите число a:" << '\n';
     std::cin >> a;
 
     int S = 1;
@@ -47,7 +52,7 @@ void taskTwo() {
             S *= (i - 2);
         }
     }
-    std::cout << "Ответ на задачу: " << S << std::endl;
+    std::cout << "Ответ на задачу: " << S << '\n';
 }
 
 void taskThree() {
@@ -58,11 +63,10 @@ void taskThree() {
     float S_last = .0;
     int n = 1;
 
-    std::cout << "|" << std::setw(kSetNumberWidth) << "x";
-    std::cout << "|" << std::setw(kSetNumberWidth) << " Y";
-    std::cout << "|" << std::setw(kSetNumberWidth) << "S";
-    std::cout << "|" << std::setw(kSetNumberWidth) << "N|\n";
-
+    std::cout << '|' << std::setw(kSetOutputNumberWidth) << 'x';
+    std::cout << '|' << std::setw(kSetOutputNumberWidth) << 'Y';
+    std::cout << '|' << std::setw(kSetOutputNumberWidth) << 'S';
+    std::cout << '|' << std::setw(kSetOutputNumberWidth) << "N|" << '\n';
     for (float x = .0; x <= 1; x += 0.2) {
         Y = 1 + x * exp(x) * cos(M_PI / 4);
 
@@ -78,10 +82,10 @@ void taskThree() {
             S += A;
             ++n;
         }
-        std::cout << "|" << std::setprecision(kPrecision) << std::setw(kSetNumberWidth) << x;
-        std::cout << "|" << std::setw(kSetNumberWidth) << Y;
-        std::cout << "|" << std::setw(kSetNumberWidth) << S;
-        std::cout << "|" << std::setw(kSetNumberWidth) << n + 2 << std::endl;
+        std::cout << '|' << std::setw(kSetOutputNumberWidth) << x;
+        std::cout << '|' << std::setw(kSetOutputNumberWidth) << Y;
+        std::cout << '|' << std::setw(kSetOutputNumberWidth) << S;
+        std::cout << '|' << std::setw(kSetOutputNumberWidth) << n + 2 << '\n';
     }
 }
 
@@ -89,26 +93,31 @@ void taskFour() {
     float y = .0;
     int n = 0;
     float x = .0;
-    std::cout << "Введите числа n (n - натуральное число) и x (|x| < 1):\n";
+    std::cout << "Введите числа n (n - натуральное число) и x (|x| < 1):" << '\n';
     std::cin >> n >> x;
+
+    if (n <= 0 || abs(x) >= 1) {
+        std::cout << "Были введены неправильные данные." << '\n';
+        return;
+    }
 
     bool isRunning = true;
     char userChoiceToContinue = 'n';
     while (isRunning) {
         float A_last = 1.;
-        for (int i = 1; i <= n; i++) {
+        for (int i = 1; i <= n; ++i) {
             y += A_last * x / i;
             A_last = A_last * x * (-1);
             if (i != n && (i == kTaskFourIntermediateSumCaseOne || i == kTaskFourIntermediateSumCaseTwo || i == kTaskFourIntermediateSumCaseThree)) {
-                std::cout << "\nПромежуточное значение суммы при количестве слагаемых " << std::setw(2) << i << ": " << std::setprecision(kPrecision)
-                          << std::setw(kSetNumberWidth) << y;
+                std::cout << "Промежуточное значение суммы при количестве слагаемых " << std::setw(kSetOutputNumberWidth) << i << ": "
+                          << std::setw(kSetOutputNumberWidth) << y << '\n';
             }
         }
-        std::cout << "\nЗначение искомой суммы: " << std::setprecision(kPrecision) << y << std::endl;
-        std::cout << "\nХотите продолжить вычислять? (y/n)\n";
+        std::cout << "Значение искомой суммы: " << y << '\n';
+        std::cout << "Хотите продолжить вычислять? (y/n)" << '\n';
         std::cin >> userChoiceToContinue;
         if (userChoiceToContinue == 'y') {
-            std::cout << "Введите новое число n:\n";
+            std::cout << "Введите новое число n:" << '\n';
             std::cin >> n;
         } else {
             isRunning = false;
@@ -117,24 +126,26 @@ void taskFour() {
 }
 
 int main(int, char**) {
-    int userTaskChoice = -1;
-    char userChoiceToContinue = -1;
+    std::cout << std::fixed << std::setprecision(kPrecision);
+
+    int userTaskChoice = 0;
+    char userChoiceToContinue = 0;
     bool isRunning = true;
 
     while (isRunning) {
-        std::cout << "\nВыберите задачу из списка и напишите её номер для выподнения:\n";
-        std::cout << "\tЗадача №1 (сумма натуральных чисел на отрезке)\n";
-        std::cout << "\tЗадача №2 (произведение чисел на заданном отрезке)\n";
-        std::cout << "\tЗадача №3 (таблица значений для x)\n";
-        std::cout << "\tЗадача №4 (вычисление y по формуле)\n";
+        std::cout << "Выберите задачу из списка и напишите её номер для выподнения:" << '\n';
+        std::cout << '\t' << "Задача №1 (сумма натуральных чисел на отрезке)" << '\n';
+        std::cout << '\t' << "Задача №2 (произведение чисел на заданном отрезке)" << '\n';
+        std::cout << '\t' << "Задача №3 (таблица значений для x)" << '\n';
+        std::cout << '\t' << "Задача №4 (вычисление y по формуле)" << '\n';
 
         std::cin >> userTaskChoice;
-        if (std::cin.fail() || userTaskChoice < kTaskOne || userTaskChoice > kTaskFour) {
-            std::cout << "Неправильный ввод\n";
-            return 1;
+        while (userTaskChoice < kTaskOne || userTaskChoice > kTaskFour) {
+            std::cout << "Неправильный ввод, введите ещё раз" << '\n';
+            std::cin >> userTaskChoice;
         }
 
-        std::cout << "\nЗадача №" << userTaskChoice << std::endl;
+        std::cout << "Задача №" << userTaskChoice << '\n';
         switch (userTaskChoice) {
             case kTaskOne:
                 taskOne();
@@ -149,11 +160,11 @@ int main(int, char**) {
                 taskFour();
                 break;
             default:
-                std::cout << "Неправильный ввод\n";
+                std::cout << "Неправильный ввод" << '\n';
                 return 1;
         }
 
-        std::cout << "Продолжить работу? (y/n)\n";
+        std::cout << "Продолжить работу? (y/n)" << '\n';
         std::cin >> userChoiceToContinue;
         if (userChoiceToContinue == 'y') {
             continue;
