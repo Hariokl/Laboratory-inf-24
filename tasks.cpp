@@ -55,11 +55,12 @@ void taskTwo() {
             sum *= (i - kTwo);
         }
     }
-    std::cout << "Ответ на задачу: " << sum << '\n';
+    std::cout << "Ответ на задачу: " << std::fixed << sum << '\n';
 }
 
 void taskThree() {
     const int kSetOutputNumberWidth = 11;
+    const int kPrecisionForX = 1;
     const double kEpsilon = 1e-6;
     const double kCosPi4 = std::cos(M_PI / 4);
     const double kMinX = 0.;
@@ -77,19 +78,17 @@ void taskThree() {
 
         double summand = kCosPi4 * x;
         double sum = 1 + kCosPi4 * x;
-        double lastSum = 1;
         int n = 1;
-        while (sum - lastSum > kEpsilon) {
-            lastSum = sum;
-            summand /= n * x;
+        while (std::fabs(summand) > kEpsilon) {
+            summand *= x / n;
             sum += summand;
             ++n;
         }
 
-        std::cout << std::setw(kSetOutputNumberWidth) << x;
-        std::cout << std::setprecision(kPrecision) << std::setw(kSetOutputNumberWidth) << Y;
-        std::cout << std::setw(kSetOutputNumberWidth) << sum;
-        std::cout << std::setw(kSetOutputNumberWidth) << n + 1 << std::endl;
+        std::cout << std::setprecision(kPrecisionForX) << std::fixed << std::setw(kSetOutputNumberWidth) << x;
+        std::cout << std::setprecision(kPrecision) << std::fixed << std::setw(kSetOutputNumberWidth) << Y;
+        std::cout << std::fixed << std::setw(kSetOutputNumberWidth) << sum;
+        std::cout << std::setw(kSetOutputNumberWidth) << n << std::endl;
 
         x += kStepX;
     }
@@ -105,20 +104,20 @@ void taskFour() {
     std::cout << "Введите числа n (n - натуральное число) и x (|x| < 1):" << '\n';
     std::cin >> n >> x;
 
-    if (n <= 0 || std::fabs(x) >= 1.) {
+    if (n <= 0 || std::fabs(x) > 1.) {
         std::cout << "Были введены неправильные данные." << '\n';
         return;
     }
 
-    double summand = 1.;
+    double summand = x;
     for (int i = 1; i <= n; ++i) {
-        y += summand * x / i;
+        y += summand / i;
         summand = summand * x * (-1);
         if (i != n && (i == kIntermediateSumCaseOne || i == kIntermediateSumCaseTwo || i == kIntermediateSumCaseThree)) {
             std::cout << "Промежуточное значение суммы при n = " << i << ": " << std::setprecision(kPrecision) << y << '\n';
         }
     }
-    std::cout << "Значение искомой суммы: " << std::setprecision(kPrecision) << y << "\n\n";
+    std::cout << "Значение искомой суммы: " << std::fixed << std::setprecision(kPrecision) << y << "\n\n";
 }
 
 int main(int, char**) {
