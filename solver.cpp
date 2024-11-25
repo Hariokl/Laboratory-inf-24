@@ -35,7 +35,7 @@ void FoundError() {
 
 void OutputResults(Solver::Results results, double eps) {
     std::cout << "Результаты:" << '\n';
-    std::cout << "\tx:" << std::setprecision(eps) << results.x << '\n';
+    std::cout << "\tx:" << std::setprecision(static_cast<int>(1 / eps)) << results.x << '\n';
     std::cout << "\tn:" << results.n << '\n';
     std::cout << '\n';
 }
