@@ -1,11 +1,12 @@
-#include <cmath>
-#include <iostream>
-#include <iomanip>
-
 #include "solver.h"
+
+#include <cmath>
+#include <iomanip>
+#include <iostream>
 
 namespace {
 const int kMaxIteration = 1e5;
+const double kStartUpEps = 1e-6;
 [[nodiscard]] double CalculateFunctionValue(double x, double coef) {
     return x - coef * cos(x);
 }
@@ -28,7 +29,7 @@ void ChooseContinue() {
     std::cout << "Хотите продолжить выполнение программы?(y/n)" << '\n';
 }
 
-void FoundError(){
+void FoundError() {
     std::cout << "Функция не дошла до нужной точности, либо решений нет, либо решений больше одного" << '\n';
 }
 
@@ -39,7 +40,7 @@ void OutputResults(Solver::Results results, double eps) {
     std::cout << '\n';
 }
 
-}
+}  // namespace
 
 namespace Solver {
 [[nodiscard]] Results CalculatingBruteForce(double coef, double eps) {
@@ -98,7 +99,7 @@ namespace Solver {
 void MethodBruteForce(double coef, double eps) {
     Results results = CalculatingBruteForce(coef, eps);
 
-    if (results.x != results.x){
+    if (results.x != results.x) {
         FoundError();
         return;
     }
@@ -109,7 +110,7 @@ void MethodBruteForce(double coef, double eps) {
 void MethodNewton(double coef, double eps) {
     Results results = CalculatingNewton(coef, eps);
 
-    if (results.x != results.x){
+    if (results.x != results.x) {
         FoundError();
         return;
     }
@@ -125,7 +126,7 @@ void MethodBisection(double coef, double eps) {
 
     Results results = CalculatingBisection(coef, eps, leftX, rightX);
 
-    if (results.x != results.x){
+    if (results.x != results.x) {
         FoundError();
         return;
     }
@@ -135,38 +136,38 @@ void MethodBisection(double coef, double eps) {
 
 void SelectMethod(char userChoice, double coef, double eps) {
     switch (static_cast<UserChoice>(userChoice)) {
-            case UserChoice::bruteForce:
-                MethodBruteForce(coef, eps);
-                break;
-            case UserChoice::newton:
-                MethodNewton(coef, eps);
-                break;
-            case UserChoice::bisection:
-                MethodBisection(coef, eps);
-                break;
-            default:
-                break;
-        }
+        case UserChoice::bruteForce:
+            MethodBruteForce(coef, eps);
+            break;
+        case UserChoice::newton:
+            MethodNewton(coef, eps);
+            break;
+        case UserChoice::bisection:
+            MethodBisection(coef, eps);
+            break;
+        default:
+            break;
+    }
 }
 
-void ChangeSettings(char userChoice, double *coef, double *eps){
+void ChangeSettings(char userChoice, double* coef, double* eps) {
     switch (static_cast<UserChoice>(userChoice)) {
-            case UserChoice::changeCoef:
-                std::cin >> *coef;
-                break;
-            case UserChoice::changeEps:
-                std::cin >> *eps;
-                break;
-            default:
-                break;
-        }
+        case UserChoice::changeCoef:
+            std::cin >> *coef;
+            break;
+        case UserChoice::changeEps:
+            std::cin >> *eps;
+            break;
+        default:
+            break;
+    }
 }
 
 void StartUp() {
     char continueProgram = 'y';
     char userChoice = '1';
     double coef = 1.;
-    double eps = 1e-6;
+    double eps = kStartUpEps;
 
     while (continueProgram == 'y') {
         Menu(coef, eps);
@@ -181,4 +182,4 @@ void StartUp() {
     }
 }
 
-}
+}  // namespace Solver
