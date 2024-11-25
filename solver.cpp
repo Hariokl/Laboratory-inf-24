@@ -1,5 +1,6 @@
 #include <cmath>
 #include <iostream>
+#include <iomanip>
 
 #include "solver.h"
 
@@ -31,9 +32,9 @@ void FoundError(){
     std::cout << "Функция не дошла до нужной точности, либо решений нет, либо решений больше одного" << '\n';
 }
 
-void OutputResults(Solver::Results results) {
+void OutputResults(Solver::Results results, double eps) {
     std::cout << "Результаты:" << '\n';
-    std::cout << "\tx:" << results.x << '\n';
+    std::cout << "\tx:" << std::setprecision(eps) << results.x << '\n';
     std::cout << "\tn:" << results.n << '\n';
     std::cout << '\n';
 }
@@ -102,7 +103,7 @@ void MethodBruteForce(double coef, double eps) {
         return;
     }
 
-    OutputResults(results);
+    OutputResults(results, eps);
 }
 
 void MethodNewton(double coef, double eps) {
@@ -113,7 +114,7 @@ void MethodNewton(double coef, double eps) {
         return;
     }
 
-    OutputResults(results);
+    OutputResults(results, eps);
 }
 
 void MethodBisection(double coef, double eps) {
@@ -129,7 +130,7 @@ void MethodBisection(double coef, double eps) {
         return;
     }
 
-    OutputResults(results);
+    OutputResults(results, eps);
 }
 
 void SelectMethod(char userChoice, double coef, double eps) {
