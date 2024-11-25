@@ -1,184 +1,81 @@
 #include <cmath>
-#include <iostream>
-#include <iomanip>
-
 #include "solver.h"
+#include "random"
+#include <iostream>
+#include <iterator>
 
-namespace {
-const int kMaxIteration = 1e5;
-[[nodiscard]] double CalculateFunctionValue(double x, double coef) {
-    return x - coef * cos(x);
+namespace Solver{
+
+[[nodiscard]] int* RandomArrayGenerator(size_t size) {
+    int* array = new int[size];
+    std::random_device r{}; // инициализация std::random_device
+    std::default_random_engine randomEngine(r()); // создание random engine с сидом, сгенерированным r
+    std::uniform_int_distribution distribution(0, 99); // равномерное распределение от 1 до 12
+    for (size_t i = 0; i < size; ++i) {
+        array[i] = distribution(randomEngine);
+    }
+    return array;
 }
 
-[[nodiscard]] double CalculateFunctionDerivative(double x, double coef) {
-    return 1 + coef * sin(x);
+void BubbleSort(int* array, size_t size) {
+    bool earlyStopBool = true;
+    for (size_t i = 0; i < size - 1; ++i) {
+        for (size_t j = i + 1; j < size; ++j) {
+            if (array[i] > array[j]) {
+                std::swap(array[i], array[j]);
+                earlyStopBool = false;
+            }
+        }
+        if (earlyStopBool) {
+            break;
+        }
+    }
 }
 
-void Menu(double coef, double eps) {
-    std::cout << "Выберите метод решения уравнения:" << '\n';
-    std::cout << '\t' << "1. Итерационный метод" << '\n';
-    std::cout << '\t' << "2. Метод Ньютона" << '\n';
-    std::cout << '\t' << "3. Метод половинного деления" << '\n';
-    std::cout << "Если хотите изменить коэфициент k или эпсилон eps:" << '\n';
-    std::cout << '\t' << "a. Изменить коэфициент k (сейчас " << coef << ')' << '\n';
-    std::cout << '\t' << "b. Изменить эпсилон eps (сейчас " << eps << ')' << '\n';
+void SelectionSort(int* array, size_t size) {
+    int minI = 0;
+    for (size_t i = 0; i < size - 1; ++i) {
+        minI = i;
+        for (size_t j = i + 1; j < size; ++j) {
+            if (array[minI] > array[j]) {
+                minI = j;
+            }
+        }
+        std::swap(array[i], array[minI]);
+    }
 }
 
-void ChooseContinue() {
-    std::cout << "Хотите продолжить выполнение программы?(y/n)" << '\n';
-}
+void StaticArrayBubbleSort(){
+    size_t staticArrayN = 10;
 
-void FoundError(){
-    std::cout << "Функция не дошла до нужной точности, либо решений нет, либо решений больше одного" << '\n';
-}
+    int* tempArray[staticArrayN];
+    int* staticArrayBubble[staticArrayN];
+    int* staticArraySelection[staticArrayN];
 
-void OutputResults(Solver::Results results, double eps) {
-    std::cout << "Результаты:" << '\n';
-    std::cout << "\tx:" << std::setprecision(eps) << results.x << '\n';
-    std::cout << "\tn:" << results.n << '\n';
+    tempArray = RandomArrayGenerator(staticArrayN);
+    for (size_t i = 0; i < staticArrayN; ++i){
+        staticArrayBubble[i] = tempArray[i];
+        staticArraySelection[i] = tempArray[i];
+    }
+
+
+    for (size_t i = 0; i < staticArrayN; ++i){
+        std::cout << staticArrayBubble[i] << " ";
+    }
+    BubbleSort(&staticArrayBubble, staticArrayN);
     std::cout << '\n';
+    for (size_t i = 0; i < staticArrayN; ++i){
+        std::cout << staticArraySelection[i] << " ";
+    }
+    std::cout << '\n';
+    delete[] tempArray;
+    delete[] staticArrayBubble;
+    delete[] staticArraySelection;
+
 }
 
-}
-
-namespace Solver {
-[[nodiscard]] Results CalculatingBruteForce(double coef, double eps) {
-    int n = 0;
-    double x = .0;
-    while ((std::abs(CalculateFunctionValue(x, coef)) > eps) && (n < kMaxIteration)) {
-        x -= CalculateFunctionValue(x, coef);
-        ++n;
-    }
-
-    if (n == kMaxIteration) {
-        x = NAN;
-    }
-    Results results{x, n};
-    return results;
-}
-
-[[nodiscard]] Results CalculatingNewton(double coef, double eps) {
-    int n = 0;
-    double x = 0.;
-
-    while ((std::abs(CalculateFunctionValue(x, coef)) > eps) && (n < kMaxIteration)) {
-        x -= CalculateFunctionValue(x, coef) / CalculateFunctionDerivative(x, coef);
-        ++n;
-    }
-    if (n == kMaxIteration) {
-        x = NAN;
-    }
-    Results results{x, n};
-    return results;
-}
-
-[[nodiscard]] Results CalculatingBisection(double coef, double eps, double leftX, double rightX) {
-    int n = 0;
-    double const kHalf = 2.;
-    int const kBorder = 0;
-    double middleX = (leftX + rightX) / kHalf;
-
-    while ((leftX * rightX > kBorder) && (std::abs(CalculateFunctionValue(middleX, coef)) > eps) && (n < kMaxIteration)) {
-        middleX = (leftX + rightX) / kHalf;
-        if (CalculateFunctionValue(leftX, coef) * CalculateFunctionValue(middleX, coef) < kBorder) {
-            rightX = middleX;
-        } else {
-            leftX = middleX;
-        }
-        ++n;
-    }
-
-    if ((n == kMaxIteration) || (leftX * rightX > 0)) {
-        middleX = NAN;
-    }
-    Results results{middleX, n};
-    return results;
-}
-
-void MethodBruteForce(double coef, double eps) {
-    Results results = CalculatingBruteForce(coef, eps);
-
-    if (results.x != results.x){
-        FoundError();
-        return;
-    }
-
-    OutputResults(results, eps);
-}
-
-void MethodNewton(double coef, double eps) {
-    Results results = CalculatingNewton(coef, eps);
-
-    if (results.x != results.x){
-        FoundError();
-        return;
-    }
-
-    OutputResults(results, eps);
-}
-
-void MethodBisection(double coef, double eps) {
-    double leftX = 0.;
-    double rightX = 0.;
-    std::cout << "Введите значения для левого и правого конца отрезка:" << '\n';
-    std::cin >> leftX >> rightX;
-
-    Results results = CalculatingBisection(coef, eps, leftX, rightX);
-
-    if (results.x != results.x){
-        FoundError();
-        return;
-    }
-
-    OutputResults(results, eps);
-}
-
-void SelectMethod(char userChoice, double coef, double eps) {
-    switch (static_cast<UserChoice>(userChoice)) {
-            case UserChoice::bruteForce:
-                MethodBruteForce(coef, eps);
-                break;
-            case UserChoice::newton:
-                MethodNewton(coef, eps);
-                break;
-            case UserChoice::bisection:
-                MethodBisection(coef, eps);
-                break;
-            default:
-                break;
-        }
-}
-
-void ChangeSettings(char userChoice, double *coef, double *eps){
-    switch (static_cast<UserChoice>(userChoice)) {
-            case UserChoice::changeCoef:
-                std::cin >> *coef;
-                break;
-            case UserChoice::changeEps:
-                std::cin >> *eps;
-                break;
-            default:
-                break;
-        }
-}
-
-void StartUp() {
-    char continueProgram = 'y';
-    char userChoice = '1';
-    double coef = 1.;
-    double eps = 1e-6;
-
-    while (continueProgram == 'y') {
-        Menu(coef, eps);
-        std::cin >> userChoice;
-        SelectMethod(userChoice, coef, eps);
-        ChangeSettings(userChoice, &coef, &eps);
-        ChooseContinue();
-        std::cin >> continueProgram;
-        if (continueProgram != 'y') {
-            return;
-        }
-    }
+void StartUp(){
+    StaticArrayBubbleSort();
 }
 
 }
