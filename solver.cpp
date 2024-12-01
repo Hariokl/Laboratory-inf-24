@@ -22,7 +22,7 @@ void Menu(double coef, double eps) {
     std::cout << '\t' << "3. Метод половинного деления" << '\n';
     std::cout << "Если хотите изменить коэфициент k или эпсилон eps:" << '\n';
     std::cout << '\t' << "a. Изменить коэфициент k (сейчас " << coef << ')' << '\n';
-    std::cout << '\t' << "b. Изменить эпсилон eps (сейчас " << eps << ')' << '\n';
+    std::cout << '\t' << "b. Изменить эпсилон eps (сейчас " << std::setprecision(-log10(eps)) << eps << ')' << '\n';
 }
 
 void ChooseContinue() {
@@ -35,7 +35,7 @@ void FoundError() {
 
 void OutputResults(Solver::Results results, double eps) {
     std::cout << "Результаты:" << '\n';
-    std::cout << "\tx:" << std::setprecision(static_cast<int>(1 / eps)) << results.x << '\n';
+    std::cout << std::fixed << "\tx:" << std::setprecision(-log10(eps)) <<results.x << '\n';
     std::cout << "\tn:" << results.n << '\n';
     std::cout << '\n';
 }
@@ -74,25 +74,40 @@ namespace Solver {
 }
 
 [[nodiscard]] Results CalculatingBisection(double coef, double eps, double leftX, double rightX) {
-    int n = 0;
+    int count = 0;
     double const kHalf = 2.;
     int const kBorder = 0;
     double middleX = (leftX + rightX) / kHalf;
+    double calcLeft = CalculateFunctionValue(leftX, coef);
+    double calcRight = CalculateFunctionValue(rightX, coef);
+    double calcMiddle;
+    Results results;
 
-    while ((leftX * rightX > kBorder) && (std::abs(CalculateFunctionValue(middleX, coef)) > eps) && (n < kMaxIteration)) {
-        middleX = (leftX + rightX) / kHalf;
-        if (CalculateFunctionValue(leftX, coef) * CalculateFunctionValue(middleX, coef) < kBorder) {
+    if ((calcLeft > kBorder && calcRight > kBorder)) {
+        results.x = NAN;
+        return results;
+    }
+
+
+    while ((std::fabs(rightX - leftX) > eps) && (count < kMaxIteration)) {
+        calcMiddle = CalculateFunctionValue(middleX, coef);
+        std::cout << middleX << '\n';
+        if (calcMiddle > kBorder) {
             rightX = middleX;
         } else {
             leftX = middleX;
+            calcLeft = calcMiddle;
         }
-        ++n;
+        ++count;
+        middleX = (leftX + rightX) / kHalf;
     }
 
-    if ((n == kMaxIteration) || (leftX * rightX > 0)) {
-        middleX = NAN;
+    if (count == kMaxIteration) {
+        results.x = NAN;
+    } else {
+        results.x = middleX;
     }
-    Results results{middleX, n};
+    results.n = count;
     return results;
 }
 
