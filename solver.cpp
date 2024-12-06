@@ -91,9 +91,9 @@ void FillArray(int* array, size_t size) {
 void StaticArrayMethod() {
     const size_t kStaticArrayN = 10;
     Results resultsOfSort{};
-    int* tempArray = new int[kStaticArrayN];
-    int* staticArrayBubble = new int[kStaticArrayN];
-    int* staticArraySelection = new int[kStaticArrayN];
+    int tempArray[kStaticArrayN];
+    int staticArrayBubble[kStaticArrayN];
+    int staticArraySelection[kStaticArrayN];
 
     FillArray(tempArray, kStaticArrayN);
     for (size_t i = 0; i < kStaticArrayN; ++i) {
@@ -132,10 +132,6 @@ void StaticArrayMethod() {
     std::cout << "\nсортировка получившегося массива методом выбора по убыванию:    ";
     PrintArray(staticArraySelection, kStaticArrayN);
     PrintResults(resultsOfSort);
-
-    delete[] tempArray;
-    delete[] staticArrayBubble;
-    delete[] staticArraySelection;
 }
 
 void DynamicArrayMethod() {
