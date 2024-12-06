@@ -137,17 +137,13 @@ void StaticArrayMethod() {
 void DynamicArrayMethod() {
     size_t dynamicArrayN = 0;
     Results resultsOfSort{};
-    int* tempArray;
-    int* dynamicArrayBubble;
-    int* dynamicArraySelection;
 
     std::cout << "Введите длину динамического массива: ";
     std::cin >> dynamicArrayN;
 
-    tempArray = new int[dynamicArrayN];
-    dynamicArrayBubble = new int[dynamicArrayN];
-    dynamicArraySelection = new int[dynamicArrayN];
-
+    int* tempArray = new int[dynamicArrayN];
+    int* dynamicArrayBubble = new int[dynamicArrayN];
+    int* dynamicArraySelection = new int[dynamicArrayN];
 
     FillArray(tempArray, dynamicArrayN);
     for (size_t i = 0; i < dynamicArrayN; ++i) {
