@@ -34,9 +34,11 @@ void ContinueProgram() {
 namespace Solver {
 
 void FillArray(int* array, size_t size) {
+    const int kMinDistributionIRange = 0;
+    const int kMaxDistributionIRange = 99;
     std::random_device r{};
     std::default_random_engine randomEngine(r());
-    std::uniform_int_distribution distribution(0, 99);
+    std::uniform_int_distribution distribution(kMinDistributionIRange, kMaxDistributionIRange);
     for (size_t i = 0; i < size; ++i) {
         array[i] = distribution(randomEngine);
     }
@@ -87,48 +89,48 @@ void FillArray(int* array, size_t size) {
 }
 
 void StaticArrayMethod() {
-    size_t staticArrayN = 10;
+    const size_t kStaticArrayN = 10;
     Results resultsOfSort{};
-    int* tempArray = new int[staticArrayN];
-    int* staticArrayBubble = new int[staticArrayN];
-    int* staticArraySelection = new int[staticArrayN];
+    int* tempArray = new int[kStaticArrayN];
+    int* staticArrayBubble = new int[kStaticArrayN];
+    int* staticArraySelection = new int[kStaticArrayN];
 
-    FillArray(tempArray, staticArrayN);
-    for (size_t i = 0; i < staticArrayN; ++i) {
+    FillArray(tempArray, kStaticArrayN);
+    for (size_t i = 0; i < kStaticArrayN; ++i) {
         staticArrayBubble[i] = tempArray[i];
         staticArraySelection[i] = tempArray[i];
     }
 
     std::cout << "\n---------------МЕТОД ПУЗЫРЬКА---------------";
     std::cout << "\nисходный массив:                                                  ";
-    PrintArray(staticArrayBubble, staticArrayN);
-    resultsOfSort = BubbleSort(staticArrayBubble, staticArrayN, false);
+    PrintArray(staticArrayBubble, kStaticArrayN);
+    resultsOfSort = BubbleSort(staticArrayBubble, kStaticArrayN, false);
     std::cout << "\nсортировка массива методом пузырька по возрастанию:               ";
-    PrintArray(staticArrayBubble, staticArrayN);
+    PrintArray(staticArrayBubble, kStaticArrayN);
     PrintResults(resultsOfSort);
-    resultsOfSort = BubbleSort(staticArrayBubble, staticArrayN, false);
+    resultsOfSort = BubbleSort(staticArrayBubble, kStaticArrayN, false);
     std::cout << "\nсортировка получившегося массива методом пузырька по возрастанию: ";
-    PrintArray(staticArrayBubble, staticArrayN);
+    PrintArray(staticArrayBubble, kStaticArrayN);
     PrintResults(resultsOfSort);
-    resultsOfSort = BubbleSort(staticArrayBubble, staticArrayN, true);
+    resultsOfSort = BubbleSort(staticArrayBubble, kStaticArrayN, true);
     std::cout << "\nсортировка получившегося массива методом пузырька по убыванию:    ";
-    PrintArray(staticArrayBubble, staticArrayN);
+    PrintArray(staticArrayBubble, kStaticArrayN);
     PrintResults(resultsOfSort);
 
     std::cout << "\n\n---------------МЕТОД ВЫБОРКИ---------------";
     std::cout << "\nисходный массив:                                                ";
-    PrintArray(staticArraySelection, staticArrayN);
-    resultsOfSort = SelectionSort(staticArraySelection, staticArrayN, false);
+    PrintArray(staticArraySelection, kStaticArrayN);
+    resultsOfSort = SelectionSort(staticArraySelection, kStaticArrayN, false);
     std::cout << "\nсортировка массива методом выбора по возрастанию:               ";
-    PrintArray(staticArraySelection, staticArrayN);
+    PrintArray(staticArraySelection, kStaticArrayN);
     PrintResults(resultsOfSort);
-    resultsOfSort = SelectionSort(staticArraySelection, staticArrayN, false);
+    resultsOfSort = SelectionSort(staticArraySelection, kStaticArrayN, false);
     std::cout << "\nсортировка получившегося массива методом выбора по возрастанию: ";
-    PrintArray(staticArraySelection, staticArrayN);
+    PrintArray(staticArraySelection, kStaticArrayN);
     PrintResults(resultsOfSort);
-    resultsOfSort = SelectionSort(staticArraySelection, staticArrayN, true);
+    resultsOfSort = SelectionSort(staticArraySelection, kStaticArrayN, true);
     std::cout << "\nсортировка получившегося массива методом выбора по убыванию:    ";
-    PrintArray(staticArraySelection, staticArrayN);
+    PrintArray(staticArraySelection, kStaticArrayN);
     PrintResults(resultsOfSort);
 
     delete[] tempArray;
