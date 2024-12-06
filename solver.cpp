@@ -67,7 +67,7 @@ void FillArray(int* array, size_t size) {
 }
 
 [[nodiscard]] Results SelectionSort(int* array, size_t size, bool inverted) {
-    int minI = 0;
+    size_t minI = 0;
     int countSwap = 0;
     int countCompare = 0;
     for (size_t i = 0; i < size - 1; ++i) {
@@ -88,7 +88,7 @@ void FillArray(int* array, size_t size) {
 
 void StaticArrayMethod() {
     size_t staticArrayN = 10;
-    Results resultsOfSort;
+    Results resultsOfSort{};
     int* tempArray = new int[staticArrayN];
     int* staticArrayBubble = new int[staticArrayN];
     int* staticArraySelection = new int[staticArrayN];
@@ -138,7 +138,7 @@ void StaticArrayMethod() {
 
 void DynamicArrayMethod() {
     size_t dynamicArrayN = 0;
-    Results resultsOfSort;
+    Results resultsOfSort{};
 
     std::cout << "Введите длину динамического массива: ";
     std::cin >> dynamicArrayN;
