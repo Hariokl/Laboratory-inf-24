@@ -82,8 +82,10 @@ void FillArray(int* array, size_t size) {
             }
             ++countCompare;
         }
-        std::swap(array[i], array[minI]);
-        ++countSwap;
+        if (i != minI) {
+            std::swap(array[i], array[minI]);
+            ++countSwap;
+        }
     }
     return Results{countCompare, countSwap};
 }
@@ -152,19 +154,11 @@ void DynamicArrayMethod() {
     }
 
     std::cout << "\n---------------МЕТОД ПУЗЫРЬКА---------------";
-    std::cout << "\nисходный массив:                                        ";
-    PrintArray(dynamicArrayBubble, dynamicArrayN);
     resultsOfSort = BubbleSort(dynamicArrayBubble, dynamicArrayN, false);
-    std::cout << "\nсортировка массива методом пузырька по возрастанию:     ";
-    PrintArray(dynamicArrayBubble, dynamicArrayN);
     PrintResults(resultsOfSort);
 
     std::cout << "\n\n---------------МЕТОД ВЫБОРКИ---------------";
-    std::cout << "\nисходный массив:                                        ";
-    PrintArray(dynamicArraySelection, dynamicArrayN);
     resultsOfSort = SelectionSort(dynamicArraySelection, dynamicArrayN, false);
-    std::cout << "\nсортированный массив сортировкой выбора по возрастанию: ";
-    PrintArray(dynamicArraySelection, dynamicArrayN);
     PrintResults(resultsOfSort);
 
     delete[] tempArray;
