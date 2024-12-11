@@ -1,6 +1,5 @@
-#include "solver.h"
+#include "decrypter.h"
 
-int main() {
-    Solver::StartUp();
-    return 0;
+int main(int, char**) {
+    Decrypter::StartUp();
 }
