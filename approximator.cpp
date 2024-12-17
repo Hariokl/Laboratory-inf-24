@@ -1,26 +1,46 @@
-#include <iostream>
-#include <cmath>
-#include <iomanip>
-#include <cctype>
-#include <functional>
 #include "approximator.hpp"
+
+#include <cctype>
+#include <cmath>
+#include <functional>
+#include <iomanip>
+#include <iostream>
 
 namespace {
 const int kMaxFunctions = 4;
 const int kMaxMethods = 2;
+const double kHalf = 2.;
 const int kColumnWidth = 15;
 const int kMaxIterations = 1e5;
 
-double LinearFunction(double x){ return x; }
-double SineWaveFunction(double x){ return sin(x * 22.); }
-double DegreeFunction(double x){ return pow(x, 4); }
-double ArctanFunction(double x){ return atan(x); }
+double LinearFunction(double x) {
+    return x;
+}
+double SineWaveFunction(double x) {
+    const double k = 22.;
+    return sin(x * k);
+}
+double DegreeFunction(double x) {
+    return x * x * x * x;
+}
+double ArctanFunction(double x) {
+    return atan(x);
+}
 
-
-double LinearFunctionIntegral(double a, double b){ return (b*b - a*a)/2.0; }
-double SineWaveFunctionIntegral(double a, double b){ return (cos(a*22.0) - cos(b*22.0))/22.0; }
-double DegreeFunctionIntegral(double a, double b){ return (pow(b, 5) - pow(a, 5))/5.0; }
-double ArctanFunctionIntegral(double a, double b){ return b*atan(b) - a*atan(a) - (log(b*b+1) - log(a*a+1))/2.0; }
+double LinearFunctionIntegral(double a, double b) {
+    return (b * b - a * a) / kHalf;
+}
+double SineWaveFunctionIntegral(double a, double b) {
+    const double k = 22.;
+    return (cos(a * k) - cos(b * k)) / k;
+}
+double DegreeFunctionIntegral(double a, double b) {
+    const double kC = 5.;
+    return (pow(b, kC) - pow(a, kC)) / kC;
+}
+double ArctanFunctionIntegral(double a, double b) {
+    return b * atan(b) - a * atan(a) - (log(b * b + 1) - log(a * a + 1)) / kHalf;
+}
 
 void Menu() {
     std::cout << "\nВведите границы(a и b) для интегригрования, а также eps: ";
@@ -40,30 +60,31 @@ void PrintMethod(int j) {
 }
 
 void TableHead() {
-    std::cout << "\n" << std::setw(10) << "Function" << std::setw(10) << "Integral" << std::setw(10)<< "IntSum" << std::setw(10)<< 'N';
+    std::cout << "\n" << std::setw(kColumnWidth) << "Function" << std::setw(kColumnWidth) << "Integral";
+    std::cout << std::setw(kColumnWidth) << "IntSum" << std::setw(kColumnWidth) << 'N';
 }
 
 void TableBody(const char* column1, double column2, double column3, int column4, double eps) {
-    std::cout << '\n' << std::setw(10) << column1 << std::setw(10) << std::setprecision(-log10(eps)) << column2;
-    std::cout << std::setw(10) << std::setprecision(-log10(eps)) << column3 << std::setw(10) <<column4;
+    std::cout << '\n' << std::setw(kColumnWidth) << column1 << std::setw(kColumnWidth) << std::setprecision(-log10(eps)) << column2;
+    std::cout << std::setw(kColumnWidth) << std::setprecision(-log10(eps)) << column3 << std::setw(kColumnWidth) << column4;
 }
 
 void InvalidData() {
     std::cout << "\nБыли введены неверные данные (методы занимают больше максимально возможного количества итераций)";
 }
 
-}
+}  // namespace
 
-namespace Approximator{
-double IntRect(TPF f, double a, double b, double dx, int* n){
+namespace Approximator {
+double IntRect(TPF f, double a, double b, double dx, int* n) {
     double x = a;
     double sum = 0.;
-    while (((*n) < kMaxIterations) && (x < b)){
+    while (((*n) < kMaxIterations) && (x < b)) {
         double f1 = f(x);
         double f2 = f(x + dx);
-        if (f1 <= f2){
+        if (f1 <= f2) {
             sum += f1 * dx;
-        }else{
+        } else {
             sum += f2 * dx;
         }
         x += dx;
@@ -72,10 +93,10 @@ double IntRect(TPF f, double a, double b, double dx, int* n){
     return sum;
 }
 
-double IntTrap(TPF f, double a, double b, double dx, int* n){
+double IntTrap(TPF f, double a, double b, double dx, int* n) {
     double x = a;
     double sum = 0.;
-    while (((*n) < kMaxIterations) && (x < b)){
+    while (((*n) < kMaxIterations) && (x < b)) {
         sum += dx * (f(x) + f(x + dx)) / 2.0;
         x += dx;
         ++(*n);
@@ -83,8 +104,8 @@ double IntTrap(TPF f, double a, double b, double dx, int* n){
     return sum;
 }
 
-TPF ChooseFunction(int currentIter){
-    TPF function;
+TPF ChooseFunction(int currentIter) {
+    TPF function{};
     switch (static_cast<Functions>(currentIter)) {
         case Functions::linear:
             function = LinearFunction;
@@ -102,8 +123,8 @@ TPF ChooseFunction(int currentIter){
     return function;
 }
 
-TPFI ChooseFunctionIntegral(int currentIter){
-    TPFI functionInteg;
+TPFI ChooseFunctionIntegral(int currentIter) {
+    TPFI functionInteg{};
     switch (static_cast<Functions>(currentIter)) {
         case Functions::linear:
             functionInteg = LinearFunctionIntegral;
@@ -121,8 +142,8 @@ TPFI ChooseFunctionIntegral(int currentIter){
     return functionInteg;
 }
 
-TPFM ChooseMethod(int currentIter){
-    TPFM method;
+TPFM ChooseMethod(int currentIter) {
+    TPFM method{};
     switch (static_cast<Methods>(currentIter)) {
         case Methods::rect:
             method = IntRect;
@@ -135,7 +156,7 @@ TPFM ChooseMethod(int currentIter){
 }
 
 void Approximate(double a, double b, double eps) {
-    if ((b - a < eps) || ((b - a) / eps > kMaxIterations)){
+    if ((b - a < eps) || ((b - a) / eps > kMaxIterations)) {
         InvalidData();
         return;
     }
@@ -143,7 +164,7 @@ void Approximate(double a, double b, double eps) {
     double approxResult = 0.;
     double interResult = 0.;
     for (int j = 0; j < kMaxMethods; ++j) {
-        TPFM method = ChooseMethod(j);
+        TPFM method{} = ChooseMethod(j);
         PrintMethod(j);
         TableHead();
         for (int i = 0; i < kMaxFunctions; ++i) {
@@ -171,4 +192,4 @@ void StartUp() {
     }
 }
 
-}
+}  // namespace Approximator

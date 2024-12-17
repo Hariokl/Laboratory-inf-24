@@ -1,19 +1,19 @@
 #pragma once
 #include <functional>
 
-namespace Approximator{
+namespace Approximator {
 typedef double (*TPF)(double);
 typedef double (*TPFI)(double, double);
 typedef double (*TPFM)(TPF, double, double, double, int*);
 
-enum class Functions{
+enum class Functions {
     linear = 0,
     sineWave,
     degree,
     arctan
 };
 
-enum class Methods{
+enum class Methods {
     rect = 0,
     trap
 };
@@ -31,4 +31,4 @@ TPFM ChooseMethod(int userChoice);
 void Approximator(double a, double b, double eps);
 
 void StartUp();
-}
+}  // namespace Approximator
