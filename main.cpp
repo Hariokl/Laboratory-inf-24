@@ -1,6 +1,6 @@
 #include "approximator.hpp"
 
 int main() {
-    approximator::StartUp();
-    return 0;
+    Approximator::StartUp();
+    return 1;
 }
