@@ -65,8 +65,8 @@ void TableHead() {
 }
 
 void TableBody(const char* column1, double column2, double column3, int column4, double eps) {
-    std::cout << '\n' << std::setw(kColumnWidth) << column1 << std::setw(kColumnWidth) << std::setprecision(-log10(eps)) << column2;
-    std::cout << std::setw(kColumnWidth) << std::setprecision(-log10(eps)) << column3 << std::setw(kColumnWidth) << column4;
+    std::cout << '\n' << std::setw(kColumnWidth) << column1 << std::setw(kColumnWidth) << std::setprecision(static_cast<int>(-log10(eps))) << column2;
+    std::cout << std::setw(kColumnWidth) << std::setprecision(static_cast<int>(-log10(eps))) << column3 << std::setw(kColumnWidth) << column4;
 }
 
 void InvalidData() {
@@ -97,7 +97,7 @@ double IntTrap(TPF f, double a, double b, double dx, int* n) {
     double x = a;
     double sum = 0.;
     while (((*n) < kMaxIterations) && (x < b)) {
-        sum += dx * (f(x) + f(x + dx)) / 2.0;
+        sum += dx * (f(x) + f(x + dx)) / kHalf;
         x += dx;
         ++(*n);
     }
@@ -164,7 +164,7 @@ void Approximate(double a, double b, double eps) {
     double approxResult = 0.;
     double interResult = 0.;
     for (int j = 0; j < kMaxMethods; ++j) {
-        TPFM method{} = ChooseMethod(j);
+        TPFM method = ChooseMethod(j);
         PrintMethod(j);
         TableHead();
         for (int i = 0; i < kMaxFunctions; ++i) {
