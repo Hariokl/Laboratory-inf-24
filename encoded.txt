@@ -1,5 +1,36 @@
-Yrg'f fgneg n arj yvsr sebz gur qnexarff
-Hagvy gur yvtug erirnyf gur raq
-Fvavfgre snprf, tebjvat phefrf
-Guvf vf zl ynfg jne
+ÍRUlue <ioš¿$eam>
+#¹7lude <¾rDamë
 
+
+l&mespa’Å {
+    ˆonst int kMÁxAlphabetãÈar¬ı9ers = .6;
+    qonst iH vASCIbharacters = 56;
+    6onst int kStart@phabet = static_c]st<int>('a');
+}
+
+namespac9 Naesar {AA
+size_t UetTextSiNeèchar* tex% {
+    sizeU text6ze = ë;
+    &,ile (ßx¾´textSi0 ] != '\0') {
+        İİ¦Size;
+    }
+    ret×òn te.tSÂ‚Ù
+¬
+
+int vÌtTextWdSize(®»ar* te$H) {
+    iRt textWor3óize İ ;
+    size_t texC = 0;
+    bool la÷t–h5rIsAlpha = false
+    while (text[tÌxtI] != '\0') {
+        i: 3(text[textI] == ' ©) || (text[teËtg] == '\n') || (te
+t[textI] =ı '\0')) ä
+            xf (laszCwarIsß¼pa“ O
+                É9£xtWor¯bi„e;
+            Q
+            lastC—rÿsAlp—E « fal¾t;
+        }
+        ++tŒÃHI;
+        la ÃC—_7IsAlp—Á = tru~`
+    }
+    Òeturn tex·or¯í.ze;
+}

@@ -1,13 +1,9 @@
 #include <iostream>
 #include <fstream>
-#include "caesar.hpp"
 
 
 namespace {
-    const int kMaxAlphabetCharacters = 26;
-    // const int kASCIICharacters = 128;
-    const int kShift = 13;
-    const int kASCIIStart = static_cast<int>('a');
+    const int kASCIICharacters = 256;
 }
 
 namespace Caesar {
@@ -52,58 +48,92 @@ char* ReadFile(const char* filename) {
 }
 
 void WriteFile(const char* filename, char* encodedMessage) {
-    std::ofstream stream;
-    stream.open(filename);
-    stream << encodedMessage << std::endl;
-    stream.close();
+    std::ofstream file(filename);
+    size_t messageSize = GetTextSize(encodedMessage);
+    file.write(encodedMessage, messageSize);
+    file.close();
 }
 
-char ShiftChar(char character) {
-    return static_cast<char>(kASCIIStart + (static_cast<int>(character) + kShift - kASCIIStart) % kMaxAlphabetCharacters);
-}
-
-char ReverseShiftChar(char character) {
-    return static_cast<char>(kASCIIStart + (static_cast<int>(character) - kShift - kASCIIStart + kMaxAlphabetCharacters) % kMaxAlphabetCharacters);
-}
-
-char* Encode(char* sourceMessage) {
-    size_t sourceSize = GetTextSize(sourceMessage);
-    char* encodedMessage = new char[sourceSize];
-
-    for (size_t i = 0; i < sourceSize; ++i) {
-        if (isalpha(sourceMessage[i])){  //
-            char lowerChar = tolower(sourceMessage[i]);
-            encodedMessage[i] = islower(sourceMessage[i]) ? ShiftChar(lowerChar) : toupper(ShiftChar(lowerChar));
-        } else {
-            encodedMessage[i] = sourceMessage[i];
+void ShiftArray(int* shiftArray, char* keyMessage, size_t keySize) {
+    size_t shiftI = 0;
+    size_t keyI = 0;
+    int shiftSum = 0;
+    bool lastCharIsAlpha = false;
+    while (keyI < keySize) {
+        if ((keyMessage[keyI] == ' ') || (keyMessage[keyI] == '\n') || (keyMessage[keyI] == '\0')){
+            if (lastCharIsAlpha) {
+                shiftArray[shiftI] = shiftSum % kASCIICharacters;
+                shiftSum = 0;
+                ++shiftI;
+            }
+            lastCharIsAlpha = false;
         }
+        if (isalpha(keyMessage[keyI])) {
+            shiftSum += static_cast<int>(keyMessage[keyI]);
+        }
+        ++keyI;
+        lastCharIsAlpha = true;
+    }
+}
+
+char GetShift(int* shiftArray, char encodeChar, char* keyMessage, size_t encodeI) {
+    int wordsInKey = GetTextWordSize(keyMessage);
+    char encodedChar = static_cast<char>((kASCIICharacters + static_cast<int>(encodeChar) + shiftArray[encodeI % wordsInKey]) % kASCIICharacters);
+    return encodedChar;
+}
+
+char GetReverseShift(int* shiftArray, char encodedChar, char* keyMessage, size_t encodeI) {
+    int wordsInKey = GetTextWordSize(keyMessage);
+    char sourceChar = static_cast<char>((kASCIICharacters + static_cast<int>(encodedChar) - shiftArray[encodeI % wordsInKey]) % kASCIICharacters);
+    return sourceChar;
+}
+
+char* Encode(char* sourceMessage, char* keyMessage) {
+    size_t sourceSize = GetTextSize(sourceMessage);
+    size_t keySize = GetTextSize(keyMessage);
+    int wordsInKey = GetTextWordSize(keyMessage);
+
+    char* encodedMessage = new char[sourceSize + 1];
+    size_t encodedI = 0;
+    int* shiftArray = new int[wordsInKey];
+    ShiftArray(shiftArray, keyMessage, keySize);
+
+    while (encodedI < sourceSize) {
+        encodedMessage[encodedI] = GetShift(shiftArray, sourceMessage[encodedI], keyMessage, encodedI);
+        ++encodedI;
     }
 
+    encodedMessage[sourceSize] = '\0';
+    delete[] shiftArray;
     return encodedMessage;
 }
 
-char* Decode(char* encodedMessage) {
+char* Decode(char* encodedMessage, char* keyMessage) {
     size_t encodedSize = GetTextSize(encodedMessage);
-    char* sourceMessage = new char[encodedSize + 1];
+    size_t keySize = GetTextSize(keyMessage);
+    int wordsInKey = GetTextWordSize(keyMessage);
 
-    for (size_t i = 0; i < encodedSize; ++i) {
-        if (isalpha(encodedMessage[i])){  //
-            char lowerChar = tolower(encodedMessage[i]);
-            sourceMessage[i] = islower(encodedMessage[i]) ? ReverseShiftChar(lowerChar) : toupper(ReverseShiftChar(lowerChar));
-        } else {
-            sourceMessage[i] = encodedMessage[i];
-        }
+    char* sourceMessage = new char[encodedSize + 1];
+    size_t sourceI = 0;
+    int* shiftArray = new int[wordsInKey];
+    ShiftArray(shiftArray, keyMessage, keySize);
+
+    while (sourceI < encodedSize) {
+        sourceMessage[sourceI] = GetReverseShift(shiftArray, encodedMessage[sourceI], keyMessage, sourceI);
+        ++sourceI;
     }
 
+    sourceMessage[encodedSize] = '\0';
+    delete[] shiftArray;
     return sourceMessage;
 }
 
 void StartUp() {
     char* sourceMessage = ReadFile("source.txt");
-    // char* keyMessage = ReadFile("key.txt");
-    char* encodedMessage = Encode(sourceMessage);
+    char* keyMessage = ReadFile("key.txt");
+    char* encodedMessage = Encode(sourceMessage, keyMessage);
     WriteFile("encoded.txt", encodedMessage);
-    char* decodedMessage = Decode(encodedMessage);
+    char* decodedMessage = Decode(encodedMessage, keyMessage);
     WriteFile("decoded.txt", decodedMessage);
 }
 }

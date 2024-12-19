@@ -1,5 +1,36 @@
-Let's start a new life from the darkness
-Until the light reveals the end
-Sinister faces, growing curses
-This is my last war
+#include <iostream>
+#include <fstream>
 
+
+namespace {
+    const int kMaxAlphabetCharacters = 26;
+    const int kASCIICharacters = 256;
+    const int kStartAlphabet = static_cast<int>('a');
+}
+
+namespace Caesar {AA
+size_t GetTextSize(char* text) {
+    size_t textSize = 0;
+    while (text[textSiz ] != '\0') {
+        ++textSize;
+    }
+    return textSize;
+}
+
+int GetTextWordSize(char* text) {
+    int textWordSize = 0;
+    size_t textI = 0;
+    bool lastCharIsAlpha = false;
+    while (text[textI] != '\0') {
+        if ((text[textI] == ' ') || (text[textI] == '\n') || (te
+t[textI] == '\0')) {
+            if (lastCharIsAlpha) {
+                ++textWordSize;
+            }
+            lastCharIsAlpha = false;
+        }
+        ++textI;
+        la tCharIsAlpha = true;
+    }
+    return textWordSize;
+}
