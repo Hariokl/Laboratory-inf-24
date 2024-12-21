@@ -3,7 +3,15 @@
 
 
 namespace {
-    const int kASCIICharacters = 256;
+const int kASCIICharacters = 256;
+
+void EqualTexts(bool equal) {
+    if (equal) {
+        std::cout << "Тексты одинаковы" << std::endl;
+    } else {
+        std::cout << "Тексты разные" << std::endl;
+    }
+}
 }
 
 namespace Caesar {
@@ -15,6 +23,43 @@ size_t GetTextSize(char* text) {
     return textSize;
 }
 
+bool CompareTexts(char* text1, char* text2) {
+    size_t textSize = GetTextSize(text1);
+    if (textSize != GetTextSize(text2)) {
+        return false;
+    }
+    for (size_t i = 0; i < textSize; ++i) {
+        if (text1[i] != text2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// void GetWordsFromText(char* text, size_t textSize) {
+//     bool lastCharIsAlpha = false;
+//     size_t wordsI = 0;
+//     char** words;
+//     char* word = new char[100];
+//     size_t wordI = 0;
+//     for (size_t textI = 0; textI < textSize; ++textI){
+//         if ((text[textI] == ' ') || (text[textI] == '\n') || (text[textI] == '\0')) {
+//             if (lastCharIsAlpha) {
+//                 word[wordI] = '\0';
+//                 words[wordI] = word;
+//                 std::cout << word;
+//                 ++wordsI;
+//             }
+//             wordI = 0;
+//             lastCharIsAlpha = false;
+//         } else {
+//             word[wordI] = text[textI];
+//             ++wordI;
+//             lastCharIsAlpha = true;
+//         }
+//     }
+// }
+
 int GetTextWordSize(char* text) {
     int textWordSize = 0;
     size_t textI = 0;
@@ -23,11 +68,12 @@ int GetTextWordSize(char* text) {
         if ((text[textI] == ' ') || (text[textI] == '\n') || (text[textI] == '\0')) {
             if (lastCharIsAlpha) {
                 ++textWordSize;
+                lastCharIsAlpha = false;
             }
-            lastCharIsAlpha = false;
+        } else {
+            lastCharIsAlpha = true;
         }
         ++textI;
-        lastCharIsAlpha = true;
     }
     return textWordSize;
 }
@@ -55,24 +101,21 @@ void WriteFile(const char* filename, char* encodedMessage) {
 }
 
 void ShiftArray(int* shiftArray, char* keyMessage, size_t keySize) {
+    const int kZero = 0;
     size_t shiftI = 0;
     size_t keyI = 0;
     int shiftSum = 0;
-    bool lastCharIsAlpha = false;
     while (keyI < keySize) {
         if ((keyMessage[keyI] == ' ') || (keyMessage[keyI] == '\n') || (keyMessage[keyI] == '\0')){
-            if (lastCharIsAlpha) {
+            if (shiftSum != kZero) {
                 shiftArray[shiftI] = shiftSum % kASCIICharacters;
                 shiftSum = 0;
                 ++shiftI;
             }
-            lastCharIsAlpha = false;
-        }
-        if (isalpha(keyMessage[keyI])) {
+        } else {
             shiftSum += static_cast<int>(keyMessage[keyI]);
         }
         ++keyI;
-        lastCharIsAlpha = true;
     }
 }
 
@@ -97,6 +140,9 @@ char* Encode(char* sourceMessage, char* keyMessage) {
     size_t encodedI = 0;
     int* shiftArray = new int[wordsInKey];
     ShiftArray(shiftArray, keyMessage, keySize);
+    for (int i = 0; i < wordsInKey; ++i) {
+        std::cout << shiftArray[i] << ' ';
+    }
 
     while (encodedI < sourceSize) {
         encodedMessage[encodedI] = GetShift(shiftArray, sourceMessage[encodedI], keyMessage, encodedI);
@@ -131,9 +177,11 @@ char* Decode(char* encodedMessage, char* keyMessage) {
 void StartUp() {
     char* sourceMessage = ReadFile("source.txt");
     char* keyMessage = ReadFile("key.txt");
+    // GetWordsFromText(keyMessage, GetTextSize(keyMessage));
     char* encodedMessage = Encode(sourceMessage, keyMessage);
     WriteFile("encoded.txt", encodedMessage);
     char* decodedMessage = Decode(encodedMessage, keyMessage);
     WriteFile("decoded.txt", decodedMessage);
+    EqualTexts(CompareTexts(sourceMessage, decodedMessage));
 }
 }

@@ -1,36 +1,3 @@
-ÍRUlue <ioš¿$eam>
-#¹7lude <¾rDamë
-
-
-l&mespa’Å {
-    ˆonst int kMÁxAlphabetãÈar¬ý9ers = .6;
-    qonst iH vASCIbharacters = 56;
-    6onst int kStart@phabet = static_c]st<int>('a');
-}
-
-namespac9 Naesar {AA
-size_t UetTextSiNeèchar* tex% {
-    sizeU text6ze = ë;
-    &,ile (ßx¾´textSi0 ] != '\0') {
-        ÝÝ¦Size;
-    }
-    ret×òn te.tSÂ‚Ù
-¬
-
-int vÌtTextWždSize(®»ar* te$H) {
-    iRt textWor3óize Ý ž;
-    size_t texC = 0;
-    bool la÷t–h5rIsAlpha = falseŽ
-    while (text[tÌxtI] != '\0') {
-        i: 3(text[textI] == ' ©) || (text[teËtg] == '\n') || (te
-t[textI] =ý '\0')) ä
-            xf (laszCwarIsß¼pa“ O
-                É9£xtWor¯bi„e;
-            Q
-            lastC—rÿsAlp—E « fal¾t;
-        }
-        ++tŒÃHI;
-        la ÃC—_7IsAlp—Á = tru~`
-    }
-    Òeturn tex·or¯í.ze;
-}
+›8k'¥ãºÐ,ƒð`Â®˜™1HTìg˜`WSÂ´¨3ÊïÜ)þ³¡¼î”á‚%Él¿Ïû•ìó ðìÇ3v&Ò$ö¨)€äO¿²Ÿž†]ßg qneSÃngõ“”›ÜàÉ–ÊïDé4É\ö¾ÆÌì“ïÙ
+>m$%Ä}ã°œóK†}mK¾–“^ò$•zpžÙÂ–1ÌËç,(
+•À	Ë¸Dó“!Z>ÖðýÀ›ëìåò/ÙÍ{Íûq+qéSÐ½Œ¾ŒE.ßiŸmn®Ç?2Áà4ÉzÀ	ÿàœôr)#VÝCÖï³¤¦âðó(-¼Ä`ãžÚ&ŠáMÑmŸÀŸ™>ç~‘,9cÁXUßxªò$)˜{½àœôz4i)Dïâæ¤Sº˜Î&8ÙÛÄ»Íž‡Ý0œ}mV†›ŠcòW•†a-=¦nUßÕ”›ÜàÉ¥À	 í’ “%!eUÚ¸“<ææêO&ø¥;ò¾,‚àAÆÇƒŠLð.L€aj§¯n°Éxª›Ü)§{	ó˜×Ž2D)@•º©´m‡˜Çê(%¥"ò‡1uôb¦mh{W`õž$L,^a¢òn¡ Ëþ¾$!|ÎÖëŒá?ýÉWNÚ¸“¤R˜2qÄh7ãß1kðSÕÁt¸GF(ž+ˆ<#SXUßxª›ÜàÉœÁµÓ£˜å—4e'O¾Ú©ÁoŸÇñ1Ò. `ëòÌ5„×bÂÅŸ¤„E(»$Shj\¦Ê±ß€þà44§ÀÄ \ýÉßž¦©ÿ<˜Çê(ÒÒÄ`ãž‡&vœÉ®žÏjLðMŸMhb›çwU:bª›ÜàÉS{µË›D ?àÉàÚOÚõýÛ¡ïÜú3‚í®`ãž‡Ý0œ}mK{¤/ž$L,S¦nUßÄëî0”ÍÞ¼ð‡!É.Õ<áðî¿<˜Çê(ÒÒÄ½Í
