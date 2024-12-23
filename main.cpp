@@ -1,6 +1,6 @@
-#include "caesar.hpp"
+#include "matrix.hpp"
 
 int main() {
-    Caesar::StartUp();
-    return 1;
+    Matrix::Launcher();
+    return 0;
 }
