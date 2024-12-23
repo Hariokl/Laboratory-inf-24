@@ -36,30 +36,6 @@ bool CompareTexts(char* text1, char* text2) {
     return true;
 }
 
-// void GetWordsFromText(char* text, size_t textSize) {
-//     bool lastCharIsAlpha = false;
-//     size_t wordsI = 0;
-//     char** words;
-//     char* word = new char[100];
-//     size_t wordI = 0;
-//     for (size_t textI = 0; textI < textSize; ++textI){
-//         if ((text[textI] == ' ') || (text[textI] == '\n') || (text[textI] == '\0')) {
-//             if (lastCharIsAlpha) {
-//                 word[wordI] = '\0';
-//                 words[wordI] = word;
-//                 std::cout << word;
-//                 ++wordsI;
-//             }
-//             wordI = 0;
-//             lastCharIsAlpha = false;
-//         } else {
-//             word[wordI] = text[textI];
-//             ++wordI;
-//             lastCharIsAlpha = true;
-//         }
-//     }
-// }
-
 int GetTextWordSize(char* text) {
     int textWordSize = 0;
     size_t textI = 0;
@@ -119,14 +95,12 @@ void ShiftArray(int* shiftArray, char* keyMessage, size_t keySize) {
     }
 }
 
-char GetShift(int* shiftArray, char encodeChar, char* keyMessage, size_t encodeI) {
-    int wordsInKey = GetTextWordSize(keyMessage);
+char GetShift(int* shiftArray, char encodeChar, int wordsInKey, size_t encodeI) {
     char encodedChar = static_cast<char>((kASCIICharacters + static_cast<int>(encodeChar) + shiftArray[encodeI % wordsInKey]) % kASCIICharacters);
     return encodedChar;
 }
 
-char GetReverseShift(int* shiftArray, char encodedChar, char* keyMessage, size_t encodeI) {
-    int wordsInKey = GetTextWordSize(keyMessage);
+char GetReverseShift(int* shiftArray, char encodedChar, int wordsInKey, size_t encodeI) {
     char sourceChar = static_cast<char>((kASCIICharacters + static_cast<int>(encodedChar) - shiftArray[encodeI % wordsInKey]) % kASCIICharacters);
     return sourceChar;
 }
@@ -140,12 +114,9 @@ char* Encode(char* sourceMessage, char* keyMessage) {
     size_t encodedI = 0;
     int* shiftArray = new int[wordsInKey];
     ShiftArray(shiftArray, keyMessage, keySize);
-    for (int i = 0; i < wordsInKey; ++i) {
-        std::cout << shiftArray[i] << ' ';
-    }
 
     while (encodedI < sourceSize) {
-        encodedMessage[encodedI] = GetShift(shiftArray, sourceMessage[encodedI], keyMessage, encodedI);
+        encodedMessage[encodedI] = GetShift(shiftArray, sourceMessage[encodedI], wordsInKey, encodedI);
         ++encodedI;
     }
 
@@ -165,7 +136,7 @@ char* Decode(char* encodedMessage, char* keyMessage) {
     ShiftArray(shiftArray, keyMessage, keySize);
 
     while (sourceI < encodedSize) {
-        sourceMessage[sourceI] = GetReverseShift(shiftArray, encodedMessage[sourceI], keyMessage, sourceI);
+        sourceMessage[sourceI] = GetReverseShift(shiftArray, encodedMessage[sourceI], wordsInKey, sourceI);
         ++sourceI;
     }
 
