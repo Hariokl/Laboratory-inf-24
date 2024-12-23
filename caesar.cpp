@@ -1,16 +1,47 @@
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 
 
 namespace {
+const int kSetWidth = 10;
 const int kASCIICharacters = 256;
+const int kZero = 0;
 
 void EqualTexts(bool equal) {
     if (equal) {
-        std::cout << "Тексты одинаковы" << std::endl;
+        std::cout << "Успешно раздекодировали!" << std::endl;
     } else {
-        std::cout << "Тексты разные" << std::endl;
+        std::cout << "Успешно раздекодировали!." << std::endl;
     }
+}
+
+void AskForCharacter() {
+    std::cout << "\nКакой сивол декодировать?";
+}
+
+void ChoiceToContinue() {
+    std::cout << "\nПродолжить программу (y/n)";
+}
+
+void InformationMenu() {
+    std::cout << '\n' << std::setw(kSetWidth) << "символ" << std::setw(kSetWidth) << "кол-во" << std::setw(kSetWidth);
+    std::cout << "вар-ов";
+}
+
+void Info(char userChar, int** symbolArray) {
+    std::cout << '\n' << std::setw(kSetWidth) << userChar;
+    int sourceCount = 0;
+    int encodedCount = 0;
+    int symbolCount = 0;
+    for (int i = 0; i < kASCIICharacters; ++i) {
+        symbolCount = symbolArray[static_cast<int>(userChar)][i];
+        sourceCount += symbolCount;
+        if (symbolCount != kZero) {
+            ++encodedCount;
+        }
+    }
+    std::cout << std::setw(kSetWidth) << sourceCount << std::setw(kSetWidth) << encodedCount;
 }
 }
 
@@ -105,7 +136,34 @@ char GetReverseShift(int* shiftArray, char encodedChar, int wordsInKey, size_t e
     return sourceChar;
 }
 
-char* Encode(char* sourceMessage, char* keyMessage) {
+// int* GetInfo(char* source, char* encoded, size_t textSize, int* sourceCounter) {
+//     int* symbolCounter{};
+
+//     for (size_t sourceI = 0; sourceI < textSize; ++sourceI) {
+//         char curSymbol = sourceCounter[sourceI];
+//         int curCounter = 0;
+//         char* allEncoded{};
+//         for (size_t encodedI = 0; encodedI < textSize; ++encodedI) {
+//             if (source[encodedI] == curSymbol) {
+//                 bool in = false;
+//                 for (size_t i = 0; i < curCounter; ++i) {
+//                     if (encoded[encodedI] == allEncoded[i]) {
+//                         in = true;
+//                         break;
+//                     }
+//                 }
+//                 if (!in) {
+//                     allEncoded[curCounter] = encoded[encodedI];
+//                     ++curSymbol;
+//                 }
+//             }
+//         }
+//     }
+
+//     delete[] symbolCounter;
+// }
+
+char* Encode(char* sourceMessage, char* keyMessage, int** symbolArray) {
     size_t sourceSize = GetTextSize(sourceMessage);
     size_t keySize = GetTextSize(keyMessage);
     int wordsInKey = GetTextWordSize(keyMessage);
@@ -115,13 +173,16 @@ char* Encode(char* sourceMessage, char* keyMessage) {
     int* shiftArray = new int[wordsInKey];
     ShiftArray(shiftArray, keyMessage, keySize);
 
+
+
     while (encodedI < sourceSize) {
         encodedMessage[encodedI] = GetShift(shiftArray, sourceMessage[encodedI], wordsInKey, encodedI);
+        ++symbolArray[static_cast<int>(sourceMessage[encodedI])][static_cast<int>(encodedMessage[encodedI])];
         ++encodedI;
     }
 
-    encodedMessage[sourceSize] = '\0';
     delete[] shiftArray;
+    encodedMessage[sourceSize] = '\0';
     return encodedMessage;
 }
 
@@ -145,14 +206,36 @@ char* Decode(char* encodedMessage, char* keyMessage) {
     return sourceMessage;
 }
 
-void StartUp() {
-    char* sourceMessage = ReadFile("source.txt");
-    char* keyMessage = ReadFile("key.txt");
-    // GetWordsFromText(keyMessage, GetTextSize(keyMessage));
-    char* encodedMessage = Encode(sourceMessage, keyMessage);
+void StartUp(char** input) {
+    char* sourceFile = input[1];
+    char* keyFile = input[2];
+    char* sourceMessage = ReadFile(sourceFile);
+    char* keyMessage = ReadFile(keyFile);
+
+    int** symbolArray = new int*[kASCIICharacters];
+    for (int i = 0; i < kASCIICharacters; ++i) {
+        symbolArray[i] = new int[kASCIICharacters];
+    }
+    char* encodedMessage = Encode(sourceMessage, keyMessage, symbolArray);
     WriteFile("encoded.txt", encodedMessage);
     char* decodedMessage = Decode(encodedMessage, keyMessage);
     WriteFile("decoded.txt", decodedMessage);
     EqualTexts(CompareTexts(sourceMessage, decodedMessage));
+
+    char userChoice{};
+    char continueProgram = 'y';
+    while (continueProgram == 'y') {
+        AskForCharacter();
+        std::cin >> userChoice;
+        InformationMenu();
+        Info(userChoice, symbolArray);
+        ChoiceToContinue();
+        std::cin >> continueProgram;
+    }
+
+    for (int i = 0; i < kASCIICharacters; ++i) {
+        delete[] symbolArray[i];
+    }
+    delete[] symbolArray;
 }
 }

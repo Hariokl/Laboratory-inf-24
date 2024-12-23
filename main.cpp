@@ -1,6 +1,6 @@
 #include "caesar.hpp"
 
-int main() {
-    Caesar::StartUp();
+int main(int, char** input) {
+    Caesar::StartUp(input);
     return 1;
 }

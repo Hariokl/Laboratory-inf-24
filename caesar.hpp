@@ -10,5 +10,5 @@ char ShiftChar(char character);
 char ReverseShiftChar(char character);
 char* Encode(char* sourceMessage);
 char* Decode(char* encodedMessage);
-void StartUp();
+void StartUp(char** input);
 }  // namespace Caesar
