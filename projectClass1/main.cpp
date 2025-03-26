@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "planet/planet.hpp"
+#include "anket/anket.hpp"
 
 using namespace std;
 
@@ -12,11 +12,11 @@ int menu() {
     cout << "Выберите действие:" << '\n';
     cout << "1. Считать информацию с файла" << '\n';
     cout << "2. Записать планеты в файл" << '\n';
-    cout << "3. Сортировать планеты (по диаметру)" << '\n';
-    cout << "4. Добавить планету" << '\n';
-    cout << "5. Удалить планету" << '\n';
-    cout << "6. Редактировать планету" << '\n';
-    cout << "7. Вывести планеты" << '\n';
+    cout << "3. Сортировать анкеты (по размеру)" << '\n';
+    cout << "4. Добавить анкету" << '\n';
+    cout << "5. Удалить анкету" << '\n';
+    cout << "6. Редактировать анкету" << '\n';
+    cout << "7. Вывести анкеты" << '\n';
     int tmp;
     cin >> tmp;
     return tmp;
@@ -24,32 +24,32 @@ int menu() {
 
 
 int main() {
-    Planet* planets = new Planet[Size];
+    Anket* ankets = new Anket[Size];
 
-    int numberOfPlanets = 0;
+    int numberOfAnkets = 0;
     int ind;
     while (true) {
         switch (menu()) {
             case 1:
-                numberOfPlanets = read_db(planets, numberOfPlanets, Size);
+                numberOfAnkets = read_db(ankets, numberOfAnkets, Size);
                 break;
             case 2:
-                write_db(planets, numberOfPlanets);
+                write_db(ankets, numberOfAnkets);
                 break;
             case 3:
-                sort_db(planets, numberOfPlanets);
+                sort_db(ankets, numberOfAnkets);
                 break;
             case 4:
-                planets = add_planet(planets, numberOfPlanets);
+                ankets = add_anket(ankets, numberOfAnkets);
                 break;
             case 5:
-                planets = delete_planet(planets, numberOfPlanets);
+                ankets = delete_anket(ankets, numberOfAnkets);
                 break;
             case 6:
-                planets = redact_planet(planets, numberOfPlanets);
+                ankets = redact_anket(ankets, numberOfAnkets);
                 break;
             case 7:
-                print_db(planets, numberOfPlanets);
+                print_db(ankets, numberOfAnkets);
                 break;
             default:
                 cout << " Неправильный ввод" << endl;

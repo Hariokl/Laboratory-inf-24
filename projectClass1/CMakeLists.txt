@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.23)
 
-set(project "projectClass")
+set(project "projectClass1")
 project(${project})
 
 set(CMAKE_CXX_STANDARD 17)
@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(${project}_SOURCES
         main.cpp)
 
-add_subdirectory(planet)
+add_subdirectory(anket)
 
 set(${project}_SOURCE_LIST
         ${${project}_SOURCES})
@@ -16,7 +16,7 @@ set(${project}_SOURCE_LIST
 add_executable(${project}
         ${${project}_SOURCE_LIST})
 
-target_link_libraries(${project} planet)
+target_link_libraries(${project} anket)
 
 if(ENABLE_DEBUG)
     target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -g)

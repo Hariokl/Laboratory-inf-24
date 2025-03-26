@@ -1,0 +1,2 @@
+/usr/bin/ar qc libanket.a CMakeFiles/anket.dir/anket.cpp.o
+/usr/bin/ranlib libanket.a

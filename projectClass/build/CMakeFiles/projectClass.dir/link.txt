@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/projectClass.dir/main.cpp.o -o projectClass  planet/libplanet.a 
